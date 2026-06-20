@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 800096e0462944d41bf31e88e6cc5ab6
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 143049
+  packageName: Gym Set - Proto Series
+  packageVersion: 1.1
+  assetPath: Assets/Bitgem/Gym/Prefabs/gym_ceiling_tile.prefab
+  uploadId: 335800
