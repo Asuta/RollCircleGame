@@ -1,5 +1,3 @@
-using System.Numerics;
-using System.Transactions;
 using UnityEngine;
 
 public class NewMonoBehaviourScript : MonoBehaviour
