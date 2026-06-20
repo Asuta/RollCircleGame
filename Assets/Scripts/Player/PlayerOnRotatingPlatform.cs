@@ -51,12 +51,12 @@ public class PlayerOnRotatingPlatform : MonoBehaviour
         Vector3 move = inputMove * moveSpeed;
 
         // 3. 跳跃和重力
-        if (controller.isGrounded)
+        if (wasGrounded)
         {
             if (verticalVelocity < 0f)
                 verticalVelocity = -2f;
 
-            if (Input.GetButtonDown("Jump"))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
 
