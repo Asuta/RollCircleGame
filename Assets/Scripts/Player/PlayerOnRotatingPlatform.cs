@@ -3,6 +3,13 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerOnRotatingPlatform : MonoBehaviour
 {
+    public enum MoveControlMode
+    {
+        WASD,
+        ArrowKeys
+    }
+
+    public MoveControlMode moveControlMode = MoveControlMode.WASD;
     public float moveSpeed = 5f;
     public float jumpHeight = 1.5f;
     public float gravity = -20f;
@@ -38,10 +45,9 @@ public class PlayerOnRotatingPlatform : MonoBehaviour
         }
 
         // 2. 玩家自己的移动
-        float x = Input.GetAxisRaw("Horizontal");
-        float z = Input.GetAxisRaw("Vertical");
+        Vector3 inputMove = GetMoveInput();
+        float x = inputMove.x;
 
-        Vector3 inputMove = new Vector3(x, 0f, z).normalized;
         Vector3 move = inputMove * moveSpeed;
 
         // 3. 跳跃和重力
@@ -101,6 +107,37 @@ public class PlayerOnRotatingPlatform : MonoBehaviour
             currentPlatform = null;
             Debug.Log("脚下没有检测到任何东西");
         }
+    }
+
+    private Vector3 GetMoveInput()
+    {
+        float x = 0f;
+        float z = 0f;
+
+        if (moveControlMode == MoveControlMode.WASD)
+        {
+            if (Input.GetKey(KeyCode.A))
+                x -= 1f;
+            if (Input.GetKey(KeyCode.D))
+                x += 1f;
+            if (Input.GetKey(KeyCode.W))
+                z += 1f;
+            if (Input.GetKey(KeyCode.S))
+                z -= 1f;
+        }
+        else
+        {
+            if (Input.GetKey(KeyCode.LeftArrow))
+                x -= 1f;
+            if (Input.GetKey(KeyCode.RightArrow))
+                x += 1f;
+            if (Input.GetKey(KeyCode.UpArrow))
+                z += 1f;
+            if (Input.GetKey(KeyCode.DownArrow))
+                z -= 1f;
+        }
+
+        return new Vector3(x, 0f, z).normalized;
     }
 
     private void UpdateVisualDirection(float horizontalInput)
