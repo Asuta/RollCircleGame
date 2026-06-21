@@ -998,6 +998,8 @@ MonoBehaviour:
   player1Camera: {fileID: 330585545}
   player2Camera: {fileID: 0}
   mirrorPlayer2Output: 1
+  player2CameraSourceObject: {fileID: 101540874}
+  createPlayer2CameraFromCopy: 1
 --- !u!1 &1399810837
 GameObject:
   m_ObjectHideFlags: 0

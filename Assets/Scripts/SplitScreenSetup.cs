@@ -6,7 +6,10 @@ public class SplitScreenSetup : MonoBehaviour
     public Camera player1Camera;
     public Camera player2Camera;
     public bool mirrorPlayer2Output = true;
+    public GameObject player2CameraSourceObject;
+    public bool createPlayer2CameraFromCopy;
 
+    private static readonly Vector3 Player2CopyOffset = new Vector3(50f, 0f, 0f);
     private RenderTexture player2RenderTexture;
     private RawImage player2MirrorImage;
     private int currentTextureWidth;
@@ -14,6 +17,7 @@ public class SplitScreenSetup : MonoBehaviour
 
     void Start()
     {
+        CreatePlayer2CameraCopyIfNeeded();
         RefreshSplitScreen();
     }
 
@@ -25,6 +29,26 @@ public class SplitScreenSetup : MonoBehaviour
     private void OnDestroy()
     {
         ReleasePlayer2RenderTexture();
+    }
+
+    private void CreatePlayer2CameraCopyIfNeeded()
+    {
+        if (!createPlayer2CameraFromCopy || player2CameraSourceObject == null)
+            return;
+
+        GameObject copiedObject = Instantiate(player2CameraSourceObject, player2CameraSourceObject.transform.parent);
+        copiedObject.name = player2CameraSourceObject.name + " Player2 Copy";
+        copiedObject.transform.position += Player2CopyOffset;
+
+        Camera copiedCamera = copiedObject.GetComponentInChildren<Camera>(true);
+        if (copiedCamera != null)
+        {
+            player2Camera = copiedCamera;
+        }
+        else
+        {
+            Debug.LogWarning("复制出来的对象里没有找到 Camera：" + copiedObject.name);
+        }
     }
 
     private void RefreshSplitScreen()
