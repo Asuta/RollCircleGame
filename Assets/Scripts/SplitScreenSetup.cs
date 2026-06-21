@@ -49,6 +49,16 @@ public class SplitScreenSetup : MonoBehaviour
         {
             Debug.LogWarning("复制出来的对象里没有找到 Camera：" + copiedObject.name);
         }
+
+        PlayerOnRotatingPlatform copiedPlayer = copiedObject.GetComponentInChildren<PlayerOnRotatingPlatform>(true);
+        if (copiedPlayer != null)
+        {
+            copiedPlayer.moveControlMode = PlayerOnRotatingPlatform.MoveControlMode.ArrowKeys;
+        }
+        else
+        {
+            Debug.LogWarning("复制出来的对象里没有找到 PlayerOnRotatingPlatform：" + copiedObject.name);
+        }
     }
 
     private void RefreshSplitScreen()
