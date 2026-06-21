@@ -13,7 +13,11 @@ public class PlayerOnRotatingPlatform : MonoBehaviour
     public float moveSpeed = 5f;
     public float jumpHeight = 1.5f;
     public float gravity = -20f;
+    public int extraAirJumps = 1;
     public float platformDetectDistance = 10f;
+    public float dashSpeed = 15f;
+    public float dashDuration = 0.15f;
+    public float dashCooldown = 0.5f;
 
     public Transform visualRoot; // 角色模型，可选，用来控制朝向
 
@@ -24,6 +28,10 @@ public class PlayerOnRotatingPlatform : MonoBehaviour
 
     private float verticalVelocity;
     private bool isInAir;
+    private Vector3 dashDirection;
+    private float dashTimer;
+    private float dashCooldownTimer;
+    private int remainingAirJumps;
 
     public bool IsInAir => isInAir;
 
@@ -52,19 +60,27 @@ public class PlayerOnRotatingPlatform : MonoBehaviour
         // 2. 玩家自己的移动
         Vector3 inputMove = GetMoveInput();
         float x = inputMove.x;
+        UpdateDash(inputMove);
 
-        Vector3 move = inputMove * moveSpeed;
+        Vector3 move = GetHorizontalMove(inputMove);
 
         // 3. 跳跃和重力
         if (wasGrounded)
         {
+            remainingAirJumps = extraAirJumps;
+
             if (verticalVelocity < 0f)
                 verticalVelocity = -2f;
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                Jump();
             }
+        }
+        else if (Input.GetKeyDown(KeyCode.Space) && remainingAirJumps > 0)
+        {
+            remainingAirJumps--;
+            Jump();
         }
 
         verticalVelocity += gravity * Time.deltaTime;
@@ -110,6 +126,44 @@ public class PlayerOnRotatingPlatform : MonoBehaviour
             currentPlatform = null;
             Debug.Log("脚下没有检测到任何东西");
         }
+    }
+
+    private void Jump()
+    {
+        verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
+    }
+
+    private void UpdateDash(Vector3 inputMove)
+    {
+        if (dashCooldownTimer > 0f)
+            dashCooldownTimer -= Time.deltaTime;
+
+        if (dashTimer > 0f)
+        {
+            dashTimer -= Time.deltaTime;
+
+            if (dashTimer <= 0f)
+                dashCooldownTimer = dashCooldown;
+
+            return;
+        }
+
+        if (dashCooldownTimer > 0f || inputMove.sqrMagnitude <= 0f)
+            return;
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
+        {
+            dashDirection = inputMove;
+            dashTimer = dashDuration;
+        }
+    }
+
+    private Vector3 GetHorizontalMove(Vector3 inputMove)
+    {
+        if (dashTimer > 0f)
+            return dashDirection * dashSpeed;
+
+        return inputMove * moveSpeed;
     }
 
     private Vector3 GetMoveInput()

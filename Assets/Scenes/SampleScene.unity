@@ -899,11 +899,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cb90a92f0015a849a74a07fa35578bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerOnRotatingPlatform
-  moveControlMode: 1
+  moveControlMode: 0
   moveSpeed: 5
   jumpHeight: 1.5
-  gravity: -20
+  gravity: -30
+  extraAirJumps: 1
   platformDetectDistance: 10
+  dashSpeed: 15
+  dashDuration: 0.15
+  dashCooldown: 0.5
   visualRoot: {fileID: 0}
 --- !u!143 &998015723
 CharacterController:
