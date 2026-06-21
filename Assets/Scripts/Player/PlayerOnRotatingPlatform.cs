@@ -72,12 +72,12 @@ public class PlayerOnRotatingPlatform : MonoBehaviour
             if (verticalVelocity < 0f)
                 verticalVelocity = -2f;
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (GetJumpButtonDown())
             {
                 Jump();
             }
         }
-        else if (Input.GetKeyDown(KeyCode.Space) && remainingAirJumps > 0)
+        else if (GetJumpButtonDown() && remainingAirJumps > 0)
         {
             remainingAirJumps--;
             Jump();
@@ -151,7 +151,7 @@ public class PlayerOnRotatingPlatform : MonoBehaviour
         if (dashCooldownTimer > 0f || inputMove.sqrMagnitude <= 0f)
             return;
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
+        if (GetDashButtonDown())
         {
             dashDirection = inputMove;
             dashTimer = dashDuration;
@@ -195,6 +195,22 @@ public class PlayerOnRotatingPlatform : MonoBehaviour
         }
 
         return new Vector3(x, 0f, z).normalized;
+    }
+
+    private bool GetDashButtonDown()
+    {
+        if (moveControlMode == MoveControlMode.WASD)
+            return Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift);
+
+        return Input.GetKeyDown(KeyCode.Keypad1);
+    }
+
+    private bool GetJumpButtonDown()
+    {
+        if (moveControlMode == MoveControlMode.WASD)
+            return Input.GetKeyDown(KeyCode.Space);
+
+        return Input.GetKeyDown(KeyCode.Keypad2);
     }
 
     private void UpdateVisualDirection(float horizontalInput)

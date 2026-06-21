@@ -14,13 +14,12 @@ public class SplitScreenSetup : MonoBehaviour
 
     void Start()
     {
-        SetupSplitScreen();
+        RefreshSplitScreen();
     }
 
     private void Update()
     {
-        if (mirrorPlayer2Output && ScreenSizeChanged())
-            SetupPlayer2MirrorOutput();
+        RefreshSplitScreen();
     }
 
     private void OnDestroy()
@@ -28,30 +27,50 @@ public class SplitScreenSetup : MonoBehaviour
         ReleasePlayer2RenderTexture();
     }
 
-    private void SetupSplitScreen()
+    private void RefreshSplitScreen()
     {
-        player1Camera.rect = new Rect(0f, 0f, 0.5f, 1f); // 左半屏
+        bool hasPlayer1Camera = player1Camera != null;
+        bool hasPlayer2Camera = player2Camera != null;
+
+        if (player1Camera != null)
+            player1Camera.rect = hasPlayer2Camera ? new Rect(0f, 0f, 0.5f, 1f) : new Rect(0f, 0f, 1f, 1f);
+
+        if (!hasPlayer2Camera)
+        {
+            HidePlayer2MirrorOutput();
+            return;
+        }
+
+        Rect player2ScreenRect = hasPlayer1Camera ? new Rect(0.5f, 0f, 0.5f, 1f) : new Rect(0f, 0f, 1f, 1f);
 
         if (mirrorPlayer2Output)
         {
-            SetupPlayer2MirrorOutput();
+            EnsurePlayer2MirrorOutput(player2ScreenRect);
         }
         else
         {
+            HidePlayer2MirrorOutput();
             player2Camera.targetTexture = null;
-            player2Camera.rect = new Rect(0.5f, 0f, 0.5f, 1f); // 右半屏
+            player2Camera.rect = player2ScreenRect;
         }
     }
 
-    private void SetupPlayer2MirrorOutput()
+    private void EnsurePlayer2MirrorOutput(Rect screenRect)
     {
-        currentTextureWidth = Mathf.Max(1, Screen.width / 2);
-        currentTextureHeight = Mathf.Max(1, Screen.height);
+        int textureWidth = Mathf.Max(1, Mathf.RoundToInt(Screen.width * screenRect.width));
+        int textureHeight = Mathf.Max(1, Mathf.RoundToInt(Screen.height * screenRect.height));
 
-        ReleasePlayer2RenderTexture();
+        if (player2RenderTexture == null || currentTextureWidth != textureWidth || currentTextureHeight != textureHeight)
+        {
+            currentTextureWidth = textureWidth;
+            currentTextureHeight = textureHeight;
 
-        player2RenderTexture = new RenderTexture(currentTextureWidth, currentTextureHeight, 24);
-        player2RenderTexture.name = "Player2 Mirror Output";
+            ReleasePlayer2RenderTexture();
+
+            player2RenderTexture = new RenderTexture(currentTextureWidth, currentTextureHeight, 24);
+            player2RenderTexture.name = "Player2 Mirror Output";
+        }
+
         player2Camera.targetTexture = player2RenderTexture;
         player2Camera.rect = new Rect(0f, 0f, 1f, 1f);
 
@@ -60,6 +79,8 @@ public class SplitScreenSetup : MonoBehaviour
 
         player2MirrorImage.texture = player2RenderTexture;
         player2MirrorImage.uvRect = new Rect(1f, 0f, -1f, 1f);
+        SetPlayer2MirrorImageRect(screenRect);
+        player2MirrorImage.enabled = true;
     }
 
     private RawImage CreatePlayer2MirrorImage()
@@ -83,11 +104,21 @@ public class SplitScreenSetup : MonoBehaviour
         return rawImage;
     }
 
-    private bool ScreenSizeChanged()
+    private void SetPlayer2MirrorImageRect(Rect screenRect)
     {
-        return player2RenderTexture == null ||
-               currentTextureWidth != Mathf.Max(1, Screen.width / 2) ||
-               currentTextureHeight != Mathf.Max(1, Screen.height);
+        RectTransform rectTransform = player2MirrorImage.rectTransform;
+        rectTransform.anchorMin = new Vector2(screenRect.xMin, screenRect.yMin);
+        rectTransform.anchorMax = new Vector2(screenRect.xMax, screenRect.yMax);
+        rectTransform.offsetMin = Vector2.zero;
+        rectTransform.offsetMax = Vector2.zero;
+    }
+
+    private void HidePlayer2MirrorOutput()
+    {
+        if (player2MirrorImage != null)
+            player2MirrorImage.enabled = false;
+
+        ReleasePlayer2RenderTexture();
     }
 
     private void ReleasePlayer2RenderTexture()
