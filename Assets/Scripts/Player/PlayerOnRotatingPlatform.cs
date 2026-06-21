@@ -131,9 +131,9 @@ public class PlayerOnRotatingPlatform : MonoBehaviour
         else
         {
             if (Input.GetKey(KeyCode.LeftArrow))
-                x -= 1f;
-            if (Input.GetKey(KeyCode.RightArrow))
                 x += 1f;
+            if (Input.GetKey(KeyCode.RightArrow))
+                x -= 1f;
             if (Input.GetKey(KeyCode.UpArrow))
                 z += 1f;
             if (Input.GetKey(KeyCode.DownArrow))

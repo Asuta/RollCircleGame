@@ -899,7 +899,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cb90a92f0015a849a74a07fa35578bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerOnRotatingPlatform
-  moveControlMode: 0
+  moveControlMode: 1
   moveSpeed: 5
   jumpHeight: 1.5
   gravity: -20
@@ -988,6 +988,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SplitScreenSetup
   player1Camera: {fileID: 330585545}
   player2Camera: {fileID: 1896179700}
+  mirrorPlayer2Output: 1
 --- !u!1 &1399810837
 GameObject:
   m_ObjectHideFlags: 0
@@ -1440,7 +1441,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1896179698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1568,8 +1569,8 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 101540875}
   - {fileID: 330585546}
-  - {fileID: 1896179701}
   - {fileID: 1814414275}
   - {fileID: 998015721}
   - {fileID: 1399810841}
   - {fileID: 206862080}
+  - {fileID: 1896179701}
