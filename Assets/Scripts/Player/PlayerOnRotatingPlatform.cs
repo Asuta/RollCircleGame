@@ -13,6 +13,7 @@ public class PlayerOnRotatingPlatform : MonoBehaviour
     public float moveSpeed = 5f;
     public float jumpHeight = 1.5f;
     public float gravity = -20f;
+    public float platformDetectDistance = 10f;
 
     public Transform visualRoot; // 角色模型，可选，用来控制朝向
 
@@ -22,6 +23,9 @@ public class PlayerOnRotatingPlatform : MonoBehaviour
     private Vector3 localPointOnPlatform;
 
     private float verticalVelocity;
+    private bool isInAir;
+
+    public bool IsInAir => isInAir;
 
     private void Awake()
     {
@@ -31,9 +35,10 @@ public class PlayerOnRotatingPlatform : MonoBehaviour
     private void Update()
     {
         bool wasGrounded = controller.isGrounded;
+        isInAir = !wasGrounded;
 
-        // 1. 如果角色站在转盘上，先让角色跟随转盘移动
-        if (wasGrounded && currentPlatform != null)
+        // 1. 如果长射线检测到转盘，地面和空中都使用同一套转盘位移补偿
+        if (currentPlatform != null)
         {
             Vector3 expectedWorldPos = currentPlatform.TransformPoint(localPointOnPlatform);
             Vector3 platformDelta = expectedWorldPos - transform.position;
@@ -59,9 +64,6 @@ public class PlayerOnRotatingPlatform : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
-
-                // 跳起来后脱离转盘
-                currentPlatform = null;
             }
         }
 
@@ -72,6 +74,7 @@ public class PlayerOnRotatingPlatform : MonoBehaviour
 
         // 4. 移动完成后，重新检测脚下是否是转盘
         DetectPlatformBelow();
+        isInAir = !controller.isGrounded;
 
         // 5. 角色朝向可以独立处理，不受转盘影响
         UpdateVisualDirection(x);
@@ -80,7 +83,7 @@ public class PlayerOnRotatingPlatform : MonoBehaviour
     private void DetectPlatformBelow()
     {
         Vector3 origin = controller.bounds.center;
-        float rayDistance = controller.bounds.extents.y + 0.4f;
+        float rayDistance = Mathf.Max(platformDetectDistance, controller.bounds.extents.y);
 
         Debug.DrawRay(origin, Vector3.down * rayDistance, Color.red);
 
