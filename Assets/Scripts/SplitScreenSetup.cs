@@ -14,9 +14,22 @@ public class SplitScreenSetup : MonoBehaviour
     private RawImage player2MirrorImage;
     private int currentTextureWidth;
     private int currentTextureHeight;
+    private Transform player1ButtonEventTransform;
+    private Transform player2ButtonEventTransform;
+
+    private void OnEnable()
+    {
+        GlobalEvents.ButtonDisappearing += OnButtonDisappearing;
+    }
+
+    private void OnDisable()
+    {
+        GlobalEvents.ButtonDisappearing -= OnButtonDisappearing;
+    }
 
     void Start()
     {
+        CachePlayer1ButtonEventTransform();
         CreatePlayer2CameraCopyIfNeeded();
         RefreshSplitScreen();
     }
@@ -54,11 +67,59 @@ public class SplitScreenSetup : MonoBehaviour
         if (copiedPlayer != null)
         {
             copiedPlayer.moveControlMode = PlayerOnRotatingPlatform.MoveControlMode.ArrowKeys;
+            player2ButtonEventTransform = FindButtonEventPlayerTransform(copiedObject);
         }
         else
         {
             Debug.LogWarning("复制出来的对象里没有找到 PlayerOnRotatingPlatform：" + copiedObject.name);
         }
+    }
+
+    private void CachePlayer1ButtonEventTransform()
+    {
+        if (player2CameraSourceObject != null)
+        {
+            player1ButtonEventTransform = FindButtonEventPlayerTransform(player2CameraSourceObject);
+            return;
+        }
+
+        if (player1Camera != null)
+            player1ButtonEventTransform = FindButtonEventPlayerTransform(player1Camera.gameObject);
+    }
+
+    private Transform FindButtonEventPlayerTransform(GameObject rootObject)
+    {
+        Player player = rootObject.GetComponentInChildren<Player>(true);
+        if (player != null)
+            return player.transform;
+
+        PlayerOnRotatingPlatform playerOnRotatingPlatform = rootObject.GetComponentInChildren<PlayerOnRotatingPlatform>(true);
+        if (playerOnRotatingPlatform != null)
+            return playerOnRotatingPlatform.transform;
+
+        return rootObject.transform;
+    }
+
+    private void OnButtonDisappearing(Transform playerTransform)
+    {
+        if (IsSamePlayer(playerTransform, player1ButtonEventTransform))
+        {
+            Debug.Log("玩家A踩中了按钮");
+            return;
+        }
+
+        if (IsSamePlayer(playerTransform, player2ButtonEventTransform))
+            Debug.Log("玩家2踩中了按钮");
+    }
+
+    private bool IsSamePlayer(Transform eventPlayerTransform, Transform cachedPlayerTransform)
+    {
+        if (eventPlayerTransform == null || cachedPlayerTransform == null)
+            return false;
+
+        return eventPlayerTransform == cachedPlayerTransform
+            || eventPlayerTransform.IsChildOf(cachedPlayerTransform)
+            || cachedPlayerTransform.IsChildOf(eventPlayerTransform);
     }
 
     private void RefreshSplitScreen()

@@ -1,16 +1,21 @@
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(Collider))]
 public class ButtonChild : MonoBehaviour
 {
     public float targetYPosition;
+    [SerializeField] private float disappearDelay = 1f;
 
     private readonly HashSet<Collider> pressingColliders = new HashSet<Collider>();
     private readonly Dictionary<Transform, int> pressingPlayerCounts = new Dictionary<Transform, int>();
 
     private float initialYPosition;
     private int playerLayer;
+    private Coroutine disappearCoroutine;
+    private bool isPressed;
+    private Transform disappearTriggerPlayer;
 
     private void OnEnable()
     {
@@ -20,6 +25,13 @@ public class ButtonChild : MonoBehaviour
     private void OnDisable()
     {
         GlobalEvents.ButtonPressed -= OnButtonPressed;
+
+        if (disappearCoroutine != null)
+        {
+            StopCoroutine(disappearCoroutine);
+            disappearCoroutine = null;
+        }
+
         pressingColliders.Clear();
         pressingPlayerCounts.Clear();
     }
@@ -42,6 +54,7 @@ public class ButtonChild : MonoBehaviour
             return;
 
         MoveToTargetY();
+        isPressed = true;
         AddPressingPlayer(other, playerTransform);
     }
 
@@ -50,6 +63,9 @@ public class ButtonChild : MonoBehaviour
         Transform playerTransform = GetPlayerTransform(other);
 
         if (playerTransform == null)
+            return;
+
+        if (isPressed)
             return;
 
         MoveToTargetY();
@@ -64,7 +80,7 @@ public class ButtonChild : MonoBehaviour
 
         RemovePressingPlayer(other, playerTransform);
 
-        if (pressingColliders.Count == 0)
+        if (!isPressed && pressingColliders.Count == 0)
             MoveToInitialY();
     }
 
@@ -92,6 +108,33 @@ public class ButtonChild : MonoBehaviour
             return;
 
         Debug.Log($"踩踏的是：{playerTransform.name}，按钮是：{buttonTransform.name}");
+        StartDisappearCountdown(playerTransform);
+    }
+
+    private void StartDisappearCountdown(Transform playerTransform)
+    {
+        if (disappearCoroutine != null)
+            return;
+
+        disappearTriggerPlayer = playerTransform;
+        disappearCoroutine = StartCoroutine(DisappearAfterDelay());
+    }
+
+    private IEnumerator DisappearAfterDelay()
+    {
+        yield return new WaitForSeconds(disappearDelay);
+
+        GameObject buttonGameObject = GetButtonGameObject();
+        GlobalEvents.RaiseButtonDisappearing(disappearTriggerPlayer);
+        Destroy(buttonGameObject);
+    }
+
+    private GameObject GetButtonGameObject()
+    {
+        if (transform.parent != null)
+            return transform.parent.gameObject;
+
+        return gameObject;
     }
 
     private void AddPressingPlayer(Collider playerCollider, Transform playerTransform)
