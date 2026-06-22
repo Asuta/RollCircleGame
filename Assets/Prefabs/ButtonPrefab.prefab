@@ -154,6 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonChild
   targetYPosition: 0.085
+  disappearDelay: 1
 --- !u!1 &6663368208552829224
 GameObject:
   m_ObjectHideFlags: 0
@@ -183,7 +184,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.0024273023, y: -0.053379666, z: -0.16602749}
-  m_LocalScale: {x: 0.06259536, y: 1.3765566, z: 0.06259536}
+  m_LocalScale: {x: 1.2894019, y: 1.2894017, z: 1.2894019}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7072970499709643335}
