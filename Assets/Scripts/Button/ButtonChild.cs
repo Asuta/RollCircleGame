@@ -12,7 +12,6 @@ public class ButtonChild : MonoBehaviour
     private readonly Dictionary<Transform, int> pressingPlayerCounts = new Dictionary<Transform, int>();
 
     private float initialYPosition;
-    private int playerLayer;
     private Coroutine disappearCoroutine;
     private bool isPressed;
     private Transform disappearTriggerPlayer;
@@ -39,7 +38,6 @@ public class ButtonChild : MonoBehaviour
     private void Start()
     {
         initialYPosition = transform.position.y;
-        playerLayer = LayerMask.NameToLayer("Player");
 
         Collider triggerCollider = GetComponent<Collider>();
         if (triggerCollider != null)
@@ -86,18 +84,13 @@ public class ButtonChild : MonoBehaviour
 
     private Transform GetPlayerTransform(Collider other)
     {
-        if (playerLayer < 0)
-            return null;
-
         Player player = other.GetComponentInParent<Player>();
         if (player != null)
             return player.transform;
 
-        if (other.gameObject.layer == playerLayer)
-            return other.transform;
-
-        if (other.transform.root.gameObject.layer == playerLayer)
-            return other.transform.root;
+        PlayerOnRotatingPlatform playerOnRotatingPlatform = other.GetComponentInParent<PlayerOnRotatingPlatform>();
+        if (playerOnRotatingPlatform != null)
+            return playerOnRotatingPlatform.transform;
 
         return null;
     }
