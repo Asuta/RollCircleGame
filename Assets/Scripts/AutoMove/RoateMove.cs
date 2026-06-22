@@ -12,4 +12,10 @@ public class RoateMove : MonoBehaviour
 
         transform.RotateAround(target.position, Vector3.up, speed * Time.deltaTime);
     }
+
+    [InspectorButton]
+    public void LogTest()
+    {
+        Debug.Log("RoateMove LogTest called");
+    }
 }
