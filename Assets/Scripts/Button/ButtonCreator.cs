@@ -12,6 +12,7 @@ public class ButtonCreator : MonoBehaviour
     [SerializeField] private float maxSpawnInterval = 10f;
     [SerializeField] private float buttonCheckDistance = 1f;
     [SerializeField] private float spawnedButtonLocalY = -0.05337987f;
+    [SerializeField] private int maxButtonCount = 20;
 
     private int nextSpawnPointIndex;
     private Coroutine spawnCoroutine;
@@ -35,6 +36,10 @@ public class ButtonCreator : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(Random.Range(minSpawnInterval, maxSpawnInterval));
+
+            if (IsButtonCountFull())
+                continue;
+
             yield return FindSpawnPointAndCreateButton();
         }
     }
@@ -78,6 +83,31 @@ public class ButtonCreator : MonoBehaviour
         }
 
         return false;
+    }
+
+    private bool IsButtonCountFull()
+    {
+        if (maxButtonCount <= 0)
+            return true;
+
+        return CountButtonsInParent() >= maxButtonCount;
+    }
+
+    private int CountButtonsInParent()
+    {
+        if (buttonParent == null)
+            return 0;
+
+        int buttonCount = 0;
+
+        for (int i = 0; i < buttonParent.childCount; i++)
+        {
+            Transform child = buttonParent.GetChild(i);
+            if (child.CompareTag("button") || child.GetComponentInChildren<ButtonChild>(true) != null)
+                buttonCount++;
+        }
+
+        return buttonCount;
     }
 
     private void CreateButton(Transform spawnPoint)
