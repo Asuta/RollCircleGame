@@ -480,7 +480,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 12
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -506,13 +506,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.09343505, y: -0, z: -0, w: 0.9956254}
-  m_LocalPosition: {x: -0.31761003, y: 4.16514, z: -16.12109}
+  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
+  m_LocalPosition: {x: 6, y: 51.8, z: -98.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 101540875}
-  m_LocalEulerAnglesHint: {x: 10.723, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -975,12 +975,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerOnRotatingPlatform
   moveControlMode: 0
-  moveSpeed: 5
+  moveSpeed: 7
   jumpHeight: 1.5
   gravity: -30
   extraAirJumps: 1
   platformDetectDistance: 10
-  dashSpeed: 15
+  dashSpeed: 20
   dashDuration: 0.15
   dashCooldown: 0.5
   visualRoot: {fileID: 0}
@@ -2000,8 +2000,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1.21761, y: -7.05486, z: 4.07891}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1472143658}
   - {fileID: 1791260926}
@@ -2021,9 +2021,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36e7f397fb0724d479004d2b610c7568, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RotatingPlatform
-  initialRotateSpeed: 0
-  targetRotateSpeed: 45
-  speedChangeDuration: 10
+  initialRotateSpeed: 20
+  targetRotateSpeed: 60
+  speedChangeDuration: 60
 --- !u!1 &1909099788
 GameObject:
   m_ObjectHideFlags: 0
