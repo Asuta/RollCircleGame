@@ -7,6 +7,7 @@ public class RayOneCreator : MonoBehaviour
     public GameObject RayOnePrefab;
     public Transform RayOneParent;
     public Transform RayOneCenter;
+    [SerializeField] private float randomYawOffsetRange = 45f;
 
     public void Create()
     {
@@ -63,6 +64,8 @@ public class RayOneCreator : MonoBehaviour
         if (directionToCenter == Vector3.zero)
             return;
 
-        target.rotation = Quaternion.LookRotation(directionToCenter, Vector3.up);
+        Quaternion centerRotation = Quaternion.LookRotation(directionToCenter, Vector3.up);
+        float randomYawOffset = Random.Range(-randomYawOffsetRange, randomYawOffsetRange);
+        target.rotation = centerRotation * Quaternion.Euler(0f, randomYawOffset, 0f);
     }
 }
