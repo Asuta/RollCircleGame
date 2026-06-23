@@ -1378,7 +1378,7 @@ MonoBehaviour:
   minSpawnInterval: 1
   maxSpawnInterval: 2
   buttonCheckDistance: 1
-  spawnedButtonLocalY: -0.05337987
+  spawnedButtonLocalY: 0.42
   maxButtonCount: 3
 --- !u!65 &1270311250
 BoxCollider:
@@ -2146,15 +2146,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2163038593666169277, guid: 2828f51b584aca34cb1fd3ad21c658d7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.049999952
+      value: -1.82
       objectReference: {fileID: 0}
     - target: {fileID: 2163038593666169277, guid: 2828f51b584aca34cb1fd3ad21c658d7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.05000019
+      value: 0.42
       objectReference: {fileID: 0}
     - target: {fileID: 2163038593666169277, guid: 2828f51b584aca34cb1fd3ad21c658d7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.4200003
+      value: -2.46
       objectReference: {fileID: 0}
     - target: {fileID: 2163038593666169277, guid: 2828f51b584aca34cb1fd3ad21c658d7, type: 3}
       propertyPath: m_LocalRotation.w

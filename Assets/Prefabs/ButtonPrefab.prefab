@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e220fb644b88ff49883487760cde26b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonChild
-  targetYPosition: 0.085
+  targetYPosition: 0.106
   disappearDelay: 1
 --- !u!1 &6663368208552829224
 GameObject:

@@ -37,7 +37,7 @@ public class ButtonChild : MonoBehaviour
 
     private void Start()
     {
-        initialYPosition = transform.position.y;
+        initialYPosition = transform.localPosition.y;
 
         Collider triggerCollider = GetComponent<Collider>();
         if (triggerCollider != null)
@@ -166,15 +166,17 @@ public class ButtonChild : MonoBehaviour
 
     private void MoveToTargetY()
     {
-        Vector3 position = transform.position;
-        position.y = targetYPosition;
-        transform.position = position;
+        Vector3 position = transform.localPosition;
+        Debug.Log($"Moving button to target Y position: {targetYPosition}");
+        position.y = targetYPosition; 
+        Debug.Log($"Button new position: {position}");
+        transform.localPosition = position;
     }
 
     private void MoveToInitialY()
     {
-        Vector3 position = transform.position;
+        Vector3 position = transform.localPosition;
         position.y = initialYPosition;
-        transform.position = position;
+        transform.localPosition = position;
     }
 }
