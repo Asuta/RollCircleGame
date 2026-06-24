@@ -13,11 +13,14 @@ public class RayOne : MonoBehaviour
     private void Awake()
     {
         initialScale = transform.localScale;
+        SetRayLineActive(false);
         transform.localScale = Vector3.zero;
     }
 
     private void OnEnable()
     {
+        SetRayLineActive(false);
+
         if (scaleInCoroutine != null)
             StopCoroutine(scaleInCoroutine);
 
@@ -43,6 +46,9 @@ public class RayOne : MonoBehaviour
         if (scaleInDuration <= 0f)
         {
             transform.localScale = initialScale;
+            UpdateRayLineLength();
+            SetRayLineActive(true);
+            StartRayLineCountdown();
             scaleInCoroutine = null;
             yield break;
         }
@@ -59,6 +65,9 @@ public class RayOne : MonoBehaviour
         }
 
         transform.localScale = initialScale;
+        UpdateRayLineLength();
+        SetRayLineActive(true);
+        StartRayLineCountdown();
         scaleInCoroutine = null;
     }
 
@@ -117,5 +126,21 @@ public class RayOne : MonoBehaviour
         }
 
         RayLine.localScale = rayLineScale;
+    }
+
+    private void SetRayLineActive(bool isActive)
+    {
+        if (RayLine != null)
+            RayLine.gameObject.SetActive(isActive);
+    }
+
+    private void StartRayLineCountdown()
+    {
+        if (RayLine == null)
+            return;
+
+        RayLine rayLine = RayLine.GetComponent<RayLine>();
+        if (rayLine != null)
+            rayLine.StartCreateRayCubeCountdown();
     }
 }
