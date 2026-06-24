@@ -95,24 +95,25 @@ public class RayOne : MonoBehaviour
 
         float angleOffset = Vector3.Angle(forward, directionToCenter);
         float circleRadius = CircleCenter.lossyScale.x;
-        float rayLength = CalculateRayLength(angleOffset, circleRadius);
+        float rayLength = CalculateRayLength(angleOffset, circleRadius) * 0.5f;
 
-        SetRayLineLossyScaleX(rayLength);
+        SetRayLineLossyScaleZ(rayLength);
+        RayLine.position = transform.position + RayLine.forward * (rayLength * 0.5f);
         transform.localScale = currentScale;
     }
 
-    private void SetRayLineLossyScaleX(float targetLossyScaleX)
+    private void SetRayLineLossyScaleZ(float targetLossyScaleZ)
     {
         Vector3 rayLineScale = RayLine.localScale;
-        float currentLossyScaleX = RayLine.lossyScale.x;
+        float currentLossyScaleZ = RayLine.lossyScale.z;
 
-        if (Mathf.Abs(currentLossyScaleX) <= Mathf.Epsilon)
+        if (Mathf.Abs(currentLossyScaleZ) <= Mathf.Epsilon)
         {
-            rayLineScale.x = targetLossyScaleX;
+            rayLineScale.z = targetLossyScaleZ;
         }
         else
         {
-            rayLineScale.x *= targetLossyScaleX / currentLossyScaleX;
+            rayLineScale.z *= targetLossyScaleZ / currentLossyScaleZ;
         }
 
         RayLine.localScale = rayLineScale;
