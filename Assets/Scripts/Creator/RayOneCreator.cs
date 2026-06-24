@@ -25,6 +25,7 @@ public class RayOneCreator : MonoBehaviour
         }
 
         GameObject rayOne = Instantiate(RayOnePrefab, spawnPoint.position, spawnPoint.rotation, RayOneParent);
+        SetCircleCenter(rayOne);
         FaceCenter(rayOne.transform);
     }
 
@@ -67,5 +68,17 @@ public class RayOneCreator : MonoBehaviour
         Quaternion centerRotation = Quaternion.LookRotation(directionToCenter, Vector3.up);
         float randomYawOffset = Random.Range(-randomYawOffsetRange, randomYawOffsetRange);
         target.rotation = centerRotation * Quaternion.Euler(0f, randomYawOffset, 0f);
+    }
+
+    private void SetCircleCenter(GameObject rayOne)
+    {
+        RayOne rayOneComponent = rayOne.GetComponent<RayOne>();
+        if (rayOneComponent == null)
+        {
+            Debug.LogWarning("RayOne component is not found on created object.", rayOne);
+            return;
+        }
+
+        rayOneComponent.CircleCenter = RayOneCenter;
     }
 }
