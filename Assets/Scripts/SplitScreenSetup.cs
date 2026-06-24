@@ -16,6 +16,8 @@ public class SplitScreenSetup : MonoBehaviour
     private int currentTextureHeight;
     private Transform player1ButtonEventTransform;
     private Transform player2ButtonEventTransform;
+    private GroundTrapEvent player1GroundTrapEvent;
+    private GroundTrapEvent player2GroundTrapEvent;
 
     private void OnEnable()
     {
@@ -30,6 +32,7 @@ public class SplitScreenSetup : MonoBehaviour
     void Start()
     {
         CachePlayer1ButtonEventTransform();
+        CachePlayer1GroundTrapEvent();
         CreatePlayer2CameraCopyIfNeeded();
         RefreshSplitScreen();
     }
@@ -52,6 +55,7 @@ public class SplitScreenSetup : MonoBehaviour
         GameObject copiedObject = Instantiate(player2CameraSourceObject, player2CameraSourceObject.transform.parent);
         copiedObject.name = player2CameraSourceObject.name + " Player2 Copy";
         copiedObject.transform.position += Player2CopyOffset;
+        player2GroundTrapEvent = copiedObject.GetComponentInChildren<GroundTrapEvent>(true);
 
         Camera copiedCamera = copiedObject.GetComponentInChildren<Camera>(true);
         if (copiedCamera != null)
@@ -87,6 +91,18 @@ public class SplitScreenSetup : MonoBehaviour
             player1ButtonEventTransform = FindButtonEventPlayerTransform(player1Camera.gameObject);
     }
 
+    private void CachePlayer1GroundTrapEvent()
+    {
+        if (player2CameraSourceObject != null)
+        {
+            player1GroundTrapEvent = player2CameraSourceObject.GetComponentInChildren<GroundTrapEvent>(true);
+            return;
+        }
+
+        if (player1Camera != null)
+            player1GroundTrapEvent = player1Camera.GetComponentInParent<GroundTrapEvent>();
+    }
+
     private Transform FindButtonEventPlayerTransform(GameObject rootObject)
     {
         Player player = rootObject.GetComponentInChildren<Player>(true);
@@ -104,12 +120,25 @@ public class SplitScreenSetup : MonoBehaviour
     {
         if (IsSamePlayer(playerTransform, player1ButtonEventTransform))
         {
-            Debug.Log("玩家A踩中了按钮");
+            TriggerGroundTrapEvent(player2GroundTrapEvent, "玩家A触发按钮消失，激活玩家2地面事件");
             return;
         }
 
         if (IsSamePlayer(playerTransform, player2ButtonEventTransform))
-            Debug.Log("玩家2踩中了按钮");
+            TriggerGroundTrapEvent(player1GroundTrapEvent, "玩家2触发按钮消失，激活玩家A地面事件");
+    }
+
+    private void TriggerGroundTrapEvent(GroundTrapEvent groundTrapEvent, string logMessage)
+    {
+        Debug.Log(logMessage);
+
+        if (groundTrapEvent == null)
+        {
+            Debug.LogWarning("没有找到对应的 GroundTrapEvent。");
+            return;
+        }
+
+        groundTrapEvent.TriggerEvent();
     }
 
     private bool IsSamePlayer(Transform eventPlayerTransform, Transform cachedPlayerTransform)

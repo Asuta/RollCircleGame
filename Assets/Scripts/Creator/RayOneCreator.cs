@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RayOneCreator : MonoBehaviour
+public class RayOneCreator : MonoBehaviour, IGroundTrapHandler
 {
     public List<Transform> transformList;
     public GameObject RayOnePrefab;
@@ -33,6 +33,11 @@ public class RayOneCreator : MonoBehaviour
 
     [InspectorButton("Create RayOne")]
     public void CreateRayOne()
+    {
+        Create();
+    }
+
+    public void OnGroundTrapEvent()
     {
         Create();
     }

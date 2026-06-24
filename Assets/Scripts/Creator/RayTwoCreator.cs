@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class RayTwoCreator : MonoBehaviour
+public class RayTwoCreator : MonoBehaviour, IGroundTrapHandler
 {
     public GameObject RayTwoPrefab;
     public Transform CircleCenter;
@@ -25,5 +25,10 @@ public class RayTwoCreator : MonoBehaviour
         Vector3 eulerAngles = rayTwo.transform.eulerAngles;
         eulerAngles.y = Random.Range(0f, 360f);
         rayTwo.transform.eulerAngles = eulerAngles;
+    }
+
+    public void OnGroundTrapEvent()
+    {
+        CreateRayTwo();
     }
 }
