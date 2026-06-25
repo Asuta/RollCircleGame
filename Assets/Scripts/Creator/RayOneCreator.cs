@@ -7,7 +7,8 @@ public class RayOneCreator : MonoBehaviour, IGroundTrapHandler
     public GameObject RayOnePrefab;
     public Transform RayOneParent;
     public Transform RayOneCenter;
-    [SerializeField] private float randomYawOffsetRange = 45f;
+    [SerializeField] private float minRandomYawOffset = 15f;
+    [SerializeField] private float maxRandomYawOffset = 45f;
 
     public void Create()
     {
@@ -71,7 +72,10 @@ public class RayOneCreator : MonoBehaviour, IGroundTrapHandler
             return;
 
         Quaternion centerRotation = Quaternion.LookRotation(directionToCenter, Vector3.up);
-        float randomYawOffset = Random.Range(-randomYawOffsetRange, randomYawOffsetRange);
+        float minOffset = Mathf.Min(minRandomYawOffset, maxRandomYawOffset);
+        float maxOffset = Mathf.Max(minRandomYawOffset, maxRandomYawOffset);
+        float randomYawOffset = Random.Range(minOffset, maxOffset);
+        randomYawOffset *= Random.value < 0.5f ? -1f : 1f;
         target.rotation = centerRotation * Quaternion.Euler(0f, randomYawOffset, 0f);
     }
 

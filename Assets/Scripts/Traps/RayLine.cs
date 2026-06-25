@@ -4,6 +4,7 @@ using UnityEngine;
 public class RayLine : MonoBehaviour
 {
     public GameObject RayCube;
+    [SerializeField] private float createRayCubeDelay = 1f;
 
     private Coroutine createRayCubeCoroutine;
 
@@ -26,7 +27,7 @@ public class RayLine : MonoBehaviour
 
     private IEnumerator CreateRayCubeAfterDelay()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(createRayCubeDelay);
 
         if (RayCube == null)
         {
