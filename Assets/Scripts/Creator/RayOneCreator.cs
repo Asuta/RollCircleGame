@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,22 +10,42 @@ public class RayOneCreator : MonoBehaviour, IGroundTrapHandler
     public Transform RayOneCenter;
     [SerializeField] private float minRandomYawOffset = 15f;
     [SerializeField] private float maxRandomYawOffset = 45f;
+    [SerializeField] private float obstacleCheckDistance = 1f;
 
     public void Create()
+    {
+        StartCoroutine(CreateWhenPositionAvailable());
+    }
+
+    private IEnumerator CreateWhenPositionAvailable()
     {
         if (RayOnePrefab == null)
         {
             Debug.LogWarning("RayOnePrefab is not assigned.", this);
-            return;
+            yield break;
         }
 
-        Transform spawnPoint = GetRandomSpawnPoint();
-        if (spawnPoint == null)
+        while (true)
         {
-            Debug.LogWarning("No valid spawn point found in transformList.", this);
-            return;
-        }
+            Transform spawnPoint = GetRandomSpawnPoint();
+            if (spawnPoint == null)
+            {
+                Debug.LogWarning("No valid spawn point found in transformList.", this);
+                yield break;
+            }
 
+            if (!HasRayOneAtPosition(spawnPoint.position))
+            {
+                CreateAtSpawnPoint(spawnPoint);
+                yield break;
+            }
+
+            yield return null;
+        }
+    }
+
+    private void CreateAtSpawnPoint(Transform spawnPoint)
+    {
         GameObject rayOne = Instantiate(RayOnePrefab, spawnPoint.position, spawnPoint.rotation, RayOneParent);
         SetCircleCenter(rayOne);
         FaceCenter(rayOne.transform);
@@ -58,6 +79,35 @@ public class RayOneCreator : MonoBehaviour, IGroundTrapHandler
         }
 
         return null;
+    }
+
+    private bool HasRayOneAtPosition(Vector3 position)
+    {
+        float checkRadius = Mathf.Max(0.1f, Mathf.Abs(RayOnePrefab.transform.lossyScale.y) * 2f);
+        Vector3 castOrigin = position + Vector3.up * (checkRadius + obstacleCheckDistance);
+        RaycastHit[] hits = Physics.SphereCastAll(
+            castOrigin,
+            checkRadius,
+            Vector3.down,
+            obstacleCheckDistance,
+            Physics.DefaultRaycastLayers,
+            QueryTriggerInteraction.Collide);
+
+        foreach (RaycastHit hit in hits)
+        {
+            if (IsRayOne(hit.collider))
+                return true;
+        }
+
+        return false;
+    }
+
+    private bool IsRayOne(Collider hitCollider)
+    {
+        if (hitCollider == null)
+            return false;
+
+        return hitCollider.GetComponentInParent<RayOne>() != null;
     }
 
     private void FaceCenter(Transform target)
