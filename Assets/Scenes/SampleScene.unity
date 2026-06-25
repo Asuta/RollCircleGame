@@ -375,8 +375,8 @@ MonoBehaviour:
     Weight: 10
   - Target: {fileID: 952844102}
     Weight: 20
-  - Target: {fileID: 0}
-    Weight: 0
+  - Target: {fileID: 95642379}
+    Weight: 30
   - Target: {fileID: 0}
     Weight: 0
 --- !u!4 &206862080 stripped
@@ -2100,6 +2100,72 @@ MonoBehaviour:
   minRandomYawOffset: 15
   maxRandomYawOffset: 45
   obstacleCheckDistance: 1
+--- !u!1001 &1182382435
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1419185186}
+    m_Modifications:
+    - target: {fileID: 4035899544486543091, guid: 04a8427dc679761468f5cf55b33a2c1b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.7598104
+      objectReference: {fileID: 0}
+    - target: {fileID: 4035899544486543091, guid: 04a8427dc679761468f5cf55b33a2c1b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 4035899544486543091, guid: 04a8427dc679761468f5cf55b33a2c1b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4035899544486543091, guid: 04a8427dc679761468f5cf55b33a2c1b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4035899544486543091, guid: 04a8427dc679761468f5cf55b33a2c1b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4035899544486543091, guid: 04a8427dc679761468f5cf55b33a2c1b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4035899544486543091, guid: 04a8427dc679761468f5cf55b33a2c1b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4035899544486543091, guid: 04a8427dc679761468f5cf55b33a2c1b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4035899544486543091, guid: 04a8427dc679761468f5cf55b33a2c1b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4035899544486543091, guid: 04a8427dc679761468f5cf55b33a2c1b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4035899544486543091, guid: 04a8427dc679761468f5cf55b33a2c1b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6712305884714186530, guid: 04a8427dc679761468f5cf55b33a2c1b, type: 3}
+      propertyPath: m_Name
+      value: BaseRayCube
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 04a8427dc679761468f5cf55b33a2c1b, type: 3}
+--- !u!4 &1182382436 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4035899544486543091, guid: 04a8427dc679761468f5cf55b33a2c1b, type: 3}
+  m_PrefabInstance: {fileID: 1182382435}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1239604743
 GameObject:
   m_ObjectHideFlags: 0
@@ -2682,6 +2748,7 @@ GameObject:
   - component: {fileID: 1419185185}
   - component: {fileID: 1419185184}
   - component: {fileID: 1419185183}
+  - component: {fileID: 1419185187}
   m_Layer: 0
   m_Name: RayThree
   m_TagString: Untagged
@@ -2779,9 +2846,23 @@ Transform:
   m_LocalPosition: {x: -3.6466665, y: 1.2633333, z: -3.46}
   m_LocalScale: {x: 0.6666667, y: 0.6666667, z: 0.6666667}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1182382436}
   m_Father: {fileID: 1814414275}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1419185187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1419185182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 844c6bb34ce6efc40989c83bc55a6a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RayThree
+  intList: 140000002300000032000000
 --- !u!1 &1472143657
 GameObject:
   m_ObjectHideFlags: 0
