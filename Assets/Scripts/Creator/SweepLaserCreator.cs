@@ -5,6 +5,7 @@ public class SweepLaserCreator : MonoBehaviour, IGroundTrapHandler
     public GameObject SweepLaserPrefab;
     public Transform planeTransform;
     public Transform SweepLaserParent;
+    public float radiusOffset = 5f;
 
     [InspectorButton]
     private void CreateSweepLaser()
@@ -44,8 +45,9 @@ public class SweepLaserCreator : MonoBehaviour, IGroundTrapHandler
         direction.y = 0f;
         direction.Normalize();
 
-        float radius = planeTransform.lossyScale.x * 0.5f;
-        Vector3 spawnPosition = planeTransform.position + direction * radius;
+        float radius = planeTransform.lossyScale.x;
+        float spawnDistance = radius * 0.5f + radiusOffset;
+        Vector3 spawnPosition = planeTransform.position + direction * spawnDistance;
         spawnPosition.y = SweepLaserPrefab.transform.position.y;
 
         return spawnPosition;
