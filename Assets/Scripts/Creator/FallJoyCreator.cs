@@ -17,7 +17,10 @@ public class FallJoyCreator : MonoBehaviour, IGroundTrapHandler
         }
 
         Vector3 spawnPosition = GetSpawnPosition();
-        Instantiate(FallJoyPrefab, spawnPosition, transform.rotation, FallJoyParent);
+        GameObject fallJoy = Instantiate(FallJoyPrefab, spawnPosition, transform.rotation, FallJoyParent);
+        JoyCreator joyCreator = fallJoy.GetComponent<JoyCreator>();
+        if (joyCreator != null)
+            joyCreator.SetTargetPlayer(TargetPlayer);
     }
 
     public void OnGroundTrapEvent()
