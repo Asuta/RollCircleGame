@@ -4,6 +4,7 @@ using UnityEngine;
 public class JoyCreator : MonoBehaviour
 {
     public Transform TargetPlayer;
+    public GameObject JoyPrefab;
     [SerializeField] private float followDuration = 2f;
     [SerializeField] private float headOffset = 2f;
 
