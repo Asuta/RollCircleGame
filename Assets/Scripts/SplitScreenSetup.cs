@@ -33,6 +33,7 @@ public class SplitScreenSetup : MonoBehaviour
     {
         CachePlayer1ButtonEventTransform();
         CachePlayer1GroundTrapEvent();
+        AssignFallJoyCreators(player2CameraSourceObject, player1ButtonEventTransform);
         CreatePlayer2CameraCopyIfNeeded();
         RefreshSplitScreen();
     }
@@ -72,6 +73,7 @@ public class SplitScreenSetup : MonoBehaviour
         {
             copiedPlayer.moveControlMode = PlayerOnRotatingPlatform.MoveControlMode.ArrowKeys;
             player2ButtonEventTransform = FindButtonEventPlayerTransform(copiedObject);
+            AssignFallJoyCreators(copiedObject, player2ButtonEventTransform);
         }
         else
         {
@@ -101,6 +103,18 @@ public class SplitScreenSetup : MonoBehaviour
 
         if (player1Camera != null)
             player1GroundTrapEvent = player1Camera.GetComponentInParent<GroundTrapEvent>();
+    }
+
+    private void AssignFallJoyCreators(GameObject rootObject, Transform targetPlayer)
+    {
+        if (rootObject == null || targetPlayer == null)
+            return;
+
+        FallJoyCreator[] fallJoyCreators = rootObject.GetComponentsInChildren<FallJoyCreator>(true);
+        foreach (FallJoyCreator fallJoyCreator in fallJoyCreators)
+        {
+            fallJoyCreator.SetTargetPlayer(targetPlayer);
+        }
     }
 
     private Transform FindButtonEventPlayerTransform(GameObject rootObject)
