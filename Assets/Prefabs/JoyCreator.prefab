@@ -28,8 +28,8 @@ Transform:
   m_GameObject: {fileID: 3722619794546870587}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.877, z: 0}
-  m_LocalScale: {x: 0.53584677, y: 0.123330496, z: 0.53584677}
+  m_LocalPosition: {x: 0.000000023893, y: -0.877, z: 0}
+  m_LocalScale: {x: 0.8338668, y: 0.19192278, z: 0.8338668}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3844003552233127263}
@@ -145,8 +145,8 @@ Transform:
   m_LocalScale: {x: 4.9893, y: 4.9893, z: 4.9893}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2548072314281828250}
   - {fileID: 2337532673222998894}
+  - {fileID: 2548072314281828250}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1907102215825736140
@@ -241,6 +241,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::JoyCreator
   TargetPlayer: {fileID: 0}
   JoyPrefab: {fileID: 4691077263533297678}
+  ShadowTransform: {fileID: 0}
   followDuration: 2
   headOffset: 5
   fallSpeed: 5

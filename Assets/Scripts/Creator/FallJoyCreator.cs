@@ -19,11 +19,15 @@ public class FallJoyCreator : MonoBehaviour, IGroundTrapHandler
 
         Vector3 spawnPosition = GetSpawnPosition();
         GameObject fallJoy = Instantiate(FallJoyPrefab, spawnPosition, transform.rotation, FallJoyParent);
+        Transform shadowTransform = UpdateShadowPosition(fallJoy.transform);
+
         JoyCreator joyCreator = fallJoy.GetComponent<JoyCreator>();
         if (joyCreator != null)
+        {
             joyCreator.SetTargetPlayer(TargetPlayer);
-
-        UpdateShadowPosition(fallJoy.transform);
+            joyCreator.ShadowTransform = shadowTransform;
+            joyCreator.InitializeShadow();
+        }
     }
 
     public void OnGroundTrapEvent()
@@ -44,10 +48,10 @@ public class FallJoyCreator : MonoBehaviour, IGroundTrapHandler
         return TargetPlayer.position + Vector3.up * headOffset;
     }
 
-    private void UpdateShadowPosition(Transform fallJoyTransform)
+    private Transform UpdateShadowPosition(Transform fallJoyTransform)
     {
         if (ShadowPrefab == null || fallJoyTransform == null)
-            return;
+            return null;
 
         RaycastHit[] hits = Physics.RaycastAll(fallJoyTransform.position, Vector3.down);
         foreach (RaycastHit hit in hits)
@@ -57,10 +61,15 @@ public class FallJoyCreator : MonoBehaviour, IGroundTrapHandler
 
             Transform shadowTransform = FindShadowTransform(fallJoyTransform);
             if (shadowTransform != null)
+            {
                 shadowTransform.position = hit.point;
+                return shadowTransform;
+            }
 
-            return;
+            return null;
         }
+
+        return null;
     }
 
     private Transform FindShadowTransform(Transform fallJoyTransform)
