@@ -7,9 +7,16 @@ public class JoyCreator : MonoBehaviour
     public GameObject JoyPrefab;
     [SerializeField] private float followDuration = 2f;
     [SerializeField] private float headOffset = 2f;
+    [SerializeField] private float fallSpeed = 5f;
 
     private Coroutine followCoroutine;
+    private Coroutine fallCoroutine;
     private float fixedYPosition;
+
+    private void Awake()
+    {
+        SetJoyPrefabActive(false);
+    }
 
     private void Start()
     {
@@ -22,6 +29,12 @@ public class JoyCreator : MonoBehaviour
         {
             StopCoroutine(followCoroutine);
             followCoroutine = null;
+        }
+
+        if (fallCoroutine != null)
+        {
+            StopCoroutine(fallCoroutine);
+            fallCoroutine = null;
         }
     }
 
@@ -58,6 +71,7 @@ public class JoyCreator : MonoBehaviour
 
         FollowPlayer();
         followCoroutine = null;
+        StartFalling();
     }
 
     private void FollowPlayer()
@@ -68,5 +82,45 @@ public class JoyCreator : MonoBehaviour
         Vector3 position = TargetPlayer.position + Vector3.up * headOffset;
         position.y = fixedYPosition;
         transform.position = position;
+    }
+
+    private void StartFalling()
+    {
+        SetJoyPrefabActive(true);
+
+        if (fallCoroutine != null)
+            StopCoroutine(fallCoroutine);
+
+        fallCoroutine = StartCoroutine(FallRoutine());
+    }
+
+    private IEnumerator FallRoutine()
+    {
+        if (JoyPrefab == null)
+            yield break;
+
+        Transform joyTransform = JoyPrefab.transform;
+
+        while (true)
+        {
+            float moveDistance = fallSpeed * Time.deltaTime;
+
+            if (Physics.Raycast(joyTransform.position, Vector3.down, out RaycastHit hit, moveDistance)
+                && hit.collider.CompareTag("Plane"))
+            {
+                joyTransform.position = hit.point;
+                Destroy(gameObject);
+                yield break;
+            }
+
+            joyTransform.position += Vector3.down * moveDistance;
+            yield return null;
+        }
+    }
+
+    private void SetJoyPrefabActive(bool isActive)
+    {
+        if (JoyPrefab != null)
+            JoyPrefab.SetActive(isActive);
     }
 }
