@@ -8,6 +8,7 @@ public class CarCreator : MonoBehaviour, IGroundTrapHandler
     public GameObject GolinePrefab;
     public Transform CarParent;
     public Transform Plane;
+    public Transform TargetPlayer;
     public float radiusOffset;
     public float yOffset;
     [SerializeField] private int spawnCount = 3;
@@ -76,7 +77,7 @@ public class CarCreator : MonoBehaviour, IGroundTrapHandler
             if (!HasCarAtPosition(spawnPosition))
             {
                 GameObject car = Instantiate(CarPrefab, spawnPosition, CarPrefab.transform.rotation, CarParent);
-                FacePlaneCenter(car.transform);
+                FaceTargetPlayer(car.transform);
                 GameObject goLine = CreateGoline(car.transform);
                 Car carComponent = car.GetComponentInChildren<Car>();
                 RegisterSpawnedCar(carComponent, car, goLine);
@@ -93,6 +94,11 @@ public class CarCreator : MonoBehaviour, IGroundTrapHandler
         CreateCar();
     }
 
+    public void SetTargetPlayer(Transform targetPlayer)
+    {
+        TargetPlayer = targetPlayer;
+    }
+
     private Vector3 GetSpawnPosition()
     {
         float radius = Plane.lossyScale.x/2;
@@ -106,18 +112,18 @@ public class CarCreator : MonoBehaviour, IGroundTrapHandler
         return spawnPosition;
     }
 
-    private void FacePlaneCenter(Transform target)
+    private void FaceTargetPlayer(Transform target)
     {
-        if (target == null || Plane == null)
+        if (target == null || TargetPlayer == null)
             return;
 
-        Vector3 directionToCenter = Plane.position - target.position;
-        directionToCenter.y = 0f;
+        Vector3 directionToPlayer = TargetPlayer.position - target.position;
+        directionToPlayer.y = 0f;
 
-        if (directionToCenter == Vector3.zero)
+        if (directionToPlayer == Vector3.zero)
             return;
 
-        target.rotation = Quaternion.LookRotation(directionToCenter, Vector3.up);
+        target.rotation = Quaternion.LookRotation(directionToPlayer, Vector3.up);
     }
 
     private GameObject CreateGoline(Transform carTransform)
