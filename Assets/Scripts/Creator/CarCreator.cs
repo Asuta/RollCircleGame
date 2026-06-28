@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CarCreator : MonoBehaviour, IGroundTrapHandler
@@ -7,22 +8,45 @@ public class CarCreator : MonoBehaviour, IGroundTrapHandler
     public Transform Plane;
     public float radiusOffset;
     public float yOffset;
+    [SerializeField] private int spawnCount = 3;
+    [SerializeField] private float spawnInterval = 1f;
+
+    private Coroutine spawnCoroutine;
 
     [InspectorButton]
     private void CreateCar()
     {
+        if (spawnCoroutine != null)
+            StopCoroutine(spawnCoroutine);
+
+        spawnCoroutine = StartCoroutine(CreateCarsRoutine());
+    }
+
+    private IEnumerator CreateCarsRoutine()
+    {
         if (CarPrefab == null)
         {
             Debug.LogWarning("CarPrefab is not assigned.", this);
-            return;
+            yield break;
         }
 
         if (Plane == null)
         {
             Debug.LogWarning("Plane is not assigned.", this);
-            return;
+            yield break;
         }
 
+        for (int i = 0; i < spawnCount; i++)
+        {
+            yield return new WaitForSeconds(spawnInterval);
+            CreateSingleCar();
+        }
+
+        spawnCoroutine = null;
+    }
+
+    private void CreateSingleCar()
+    {
         Vector3 spawnPosition = GetSpawnPosition();
         GameObject car = Instantiate(CarPrefab, spawnPosition, CarPrefab.transform.rotation, CarParent);
         FacePlaneCenter(car.transform);
