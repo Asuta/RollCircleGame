@@ -45,10 +45,11 @@ public class RayThreeCreator : MonoBehaviour, IGroundTrapHandler
         float minRadius = planeRadius * Mathf.Min(minRadiusRate, maxRadiusRate);
         float maxRadius = planeRadius * Mathf.Max(minRadiusRate, maxRadiusRate);
         float radius = Random.Range(minRadius, maxRadius) * 0.5f;
-        float angle = Random.Range(0f, Mathf.PI * 2f);
+        float angle = Random.Range(-Mathf.PI * 0.5f, Mathf.PI * 0.5f);
 
-        Vector3 center = RayThreeParent.position;
-        Vector3 offset = new Vector3(Mathf.Cos(angle) * radius, 0f, Mathf.Sin(angle) * radius);
+        Vector3 center = Plane.position;
+        Vector3 offset = Vector3.right * (Mathf.Cos(angle) * radius)
+            + Vector3.forward * (Mathf.Sin(angle) * radius);
         Vector3 spawnPosition = center + offset;
         spawnPosition.y = RayThreePrefab.transform.position.y;
 
