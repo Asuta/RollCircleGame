@@ -130,6 +130,8 @@ MonoBehaviour:
   SpikesOut: {fileID: 6057010781251102346}
   SpikesIn: {fileID: 2439044359429607903}
   showDuration: 1
+  downLocalY: -2.55
+  moveLerpSpeed: 8
   lifeTime: 6
 --- !u!1 &6054820145285550323
 GameObject:
