@@ -2669,6 +2669,7 @@ MonoBehaviour:
   minWideSpacingCount: 2
   maxWideSpacingCount: 3
   rayLocalScale: {x: 0.1, y: 10, z: 0.1}
+  lifeTime: 6
 --- !u!1 &1399810837
 GameObject:
   m_ObjectHideFlags: 0
@@ -2886,6 +2887,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3ddd5701b0f99a49859704652be430f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SweepLaserCreator
+  SweepLaserPrefabMock: {fileID: 628996802149361357, guid: 79bf6c1021c4aec4abca58576d32a476, type: 3}
   SweepLaserPrefab: {fileID: 628996802149361357, guid: 43349e5a200ece24a9ffa3b1ec0db56a, type: 3}
   planeTransform: {fileID: 1472143658}
   SweepLaserParent: {fileID: 101540875}

@@ -12,9 +12,8 @@ GameObject:
   - component: {fileID: 2665903003239490740}
   - component: {fileID: 5278413817620499317}
   - component: {fileID: 9074636375335770041}
-  - component: {fileID: 9024469737421857944}
   m_Layer: 0
-  m_Name: SweepLaser
+  m_Name: SweepLaserMock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -114,23 +113,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &9024469737421857944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 628996802149361357}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97da6f7a7c5c75d4ebc07e2114c9475a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SweepLaser
-  scaleInDuration: 0
-  createSweepLaserDelay: 1
-  SweepLaserPrefab: {fileID: 2123003350185065936, guid: d66e3fc35837b044fb7da748f06a1f2b, type: 3}
-  SweepLaserParent: {fileID: 0}
-  SweepLaserTransform: {fileID: 7934974278447855215}
 --- !u!1 &1768085276551240519
 GameObject:
   m_ObjectHideFlags: 0

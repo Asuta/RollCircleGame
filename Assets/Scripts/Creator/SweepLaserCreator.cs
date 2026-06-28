@@ -2,10 +2,16 @@ using UnityEngine;
 
 public class SweepLaserCreator : MonoBehaviour, IGroundTrapHandler
 {
+    public GameObject SweepLaserPrefabMock;
     public GameObject SweepLaserPrefab;
     public Transform planeTransform;
     public Transform SweepLaserParent;
     public float radiusOffset = 5f;
+
+    private void Start()
+    {
+        CreateSweepLaserPrefabMocks();
+    }
 
     [InspectorButton]
     private void CreateSweepLaser()
@@ -32,6 +38,26 @@ public class SweepLaserCreator : MonoBehaviour, IGroundTrapHandler
         CreateSweepLaser();
     }
 
+    private void CreateSweepLaserPrefabMocks()
+    {
+        if (SweepLaserPrefabMock == null || planeTransform == null)
+            return;
+
+        Vector3[] directions =
+        {
+            Vector3.back,
+            Vector3.forward,
+            Vector3.right
+        };
+
+        foreach (Vector3 direction in directions)
+        {
+            Vector3 spawnPosition = GetSpawnPosition(direction, SweepLaserPrefabMock);
+            GameObject sweepLaserMock = Instantiate(SweepLaserPrefabMock, spawnPosition, SweepLaserPrefabMock.transform.rotation, SweepLaserParent);
+            FacePlaneCenter(sweepLaserMock.transform);
+        }
+    }
+
     private Vector3 GetRandomSpawnPosition()
     {
         Vector3[] directions =
@@ -42,13 +68,18 @@ public class SweepLaserCreator : MonoBehaviour, IGroundTrapHandler
         };
 
         Vector3 direction = directions[Random.Range(0, directions.Length)];
+        return GetSpawnPosition(direction, SweepLaserPrefab);
+    }
+
+    private Vector3 GetSpawnPosition(Vector3 direction, GameObject prefab)
+    {
         direction.y = 0f;
         direction.Normalize();
 
         float radius = planeTransform.lossyScale.x;
         float spawnDistance = radius * 0.5f + radiusOffset;
         Vector3 spawnPosition = planeTransform.position + direction * spawnDistance;
-        spawnPosition.y = SweepLaserPrefab.transform.position.y;
+        spawnPosition.y = prefab.transform.position.y;
 
         return spawnPosition;
     }
