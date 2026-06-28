@@ -141,8 +141,8 @@ Transform:
   m_GameObject: {fileID: 6485755974286217565}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.18, y: 5.51, z: 0.53803}
-  m_LocalScale: {x: 2.8562, y: 2.8562, z: 2.8562}
+  m_LocalPosition: {x: 6.18, y: 5.51, z: 1.5765}
+  m_LocalScale: {x: 1.0171195, y: 1.0171195, z: 1.0171195}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6417553695739836321}
@@ -368,3 +368,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RayLine
   RayCube: {fileID: 6712305884714186530, guid: 04a8427dc679761468f5cf55b33a2c1b, type: 3}
+  createRayCubeDelay: 1

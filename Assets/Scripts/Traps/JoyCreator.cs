@@ -7,6 +7,7 @@ public class JoyCreator : MonoBehaviour
     public GameObject JoyPrefab;
     public Transform ShadowTransform;
     [SerializeField] private float followDuration = 2f;
+    [SerializeField] private float followLerpSpeed = 5f;
     [SerializeField] private float headOffset = 2f;
     [SerializeField] private float fallSpeed = 5f;
 
@@ -85,24 +86,25 @@ public class JoyCreator : MonoBehaviour
 
         while (elapsedTime < followDuration)
         {
-            FollowPlayer();
+            FollowPlayer(Time.deltaTime);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        FollowPlayer();
         followCoroutine = null;
         StartFalling();
     }
 
-    private void FollowPlayer()
+    private void FollowPlayer(float deltaTime)
     {
         if (TargetPlayer == null)
             return;
 
-        Vector3 position = TargetPlayer.position + Vector3.up * headOffset;
-        position.y = fixedYPosition;
-        transform.position = position;
+        Vector3 targetPosition = TargetPlayer.position + Vector3.up * headOffset;
+        targetPosition.y = fixedYPosition;
+
+        float lerpRate = Mathf.Clamp01(followLerpSpeed * deltaTime);
+        transform.position = Vector3.Lerp(transform.position, targetPosition, lerpRate);
     }
 
     private void StartFalling()
