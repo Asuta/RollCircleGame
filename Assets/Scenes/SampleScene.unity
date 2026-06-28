@@ -2602,8 +2602,10 @@ MonoBehaviour:
   RayPrefab: {fileID: 6712305884714186530, guid: 04a8427dc679761468f5cf55b33a2c1b, type: 3}
   RailsParent: {fileID: 1472143658}
   Plane: {fileID: 1472143658}
-  rayCount: 10
-  raySpacing: 0.5
+  spacingA: 1
+  spacingB: 2
+  minWideSpacingCount: 2
+  maxWideSpacingCount: 3
   rayLocalScale: {x: 0.1, y: 10, z: 0.1}
 --- !u!1 &1399810837
 GameObject:

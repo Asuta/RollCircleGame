@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class RailsCreator : MonoBehaviour, IGroundTrapHandler
@@ -5,7 +6,10 @@ public class RailsCreator : MonoBehaviour, IGroundTrapHandler
     public GameObject RayPrefab;
     public Transform RailsParent;
     public Transform Plane;
-    [SerializeField] private int rayCount = 10;
+    [SerializeField] private float spacingA = 0.4f;
+    [SerializeField] private float spacingB = 0.8f;
+    [SerializeField] private int minWideSpacingCount = 2;
+    [SerializeField] private int maxWideSpacingCount = 5;
     [SerializeField] private Vector3 rayLocalScale = new Vector3(0.1f, 2f, 0.1f);
 
     [InspectorButton]
@@ -50,17 +54,71 @@ public class RailsCreator : MonoBehaviour, IGroundTrapHandler
         if (railsTransform == null)
             return;
 
-        int safeRayCount = Mathf.Max(0, rayCount);
         float radius = Plane.lossyScale.x * 0.5f;
-        float step = safeRayCount > 0 ? radius / safeRayCount : 0f;
+        float currentDistance = 0f;
+        List<float> spacingList = CreateSpacingList(radius);
 
-        for (int i = 0; i < safeRayCount; i++)
+        CreateRayPrefab(railsTransform, currentDistance);
+
+        foreach (float spacing in spacingList)
         {
-            Vector3 localPosition = Vector3.forward * ((i + 0.5f) * step);
-            GameObject ray = Instantiate(RayPrefab, railsTransform);
-            ray.transform.localPosition = localPosition;
-            ray.transform.localRotation = Quaternion.identity;
-            ray.transform.localScale = rayLocalScale;
+            currentDistance += spacing;
+            CreateRayPrefab(railsTransform, currentDistance);
         }
+    }
+
+    private List<float> CreateSpacingList(float radius)
+    {
+        float narrowSpacing = Mathf.Max(0.01f, Mathf.Min(spacingA, spacingB));
+        float wideSpacing = Mathf.Max(0.01f, Mathf.Max(spacingA, spacingB));
+        int wideSpacingCount = GetRandomWideSpacingCount(radius, wideSpacing);
+        List<float> spacingList = new List<float>();
+        float totalDistance = 0f;
+
+        for (int i = 0; i < wideSpacingCount; i++)
+        {
+            spacingList.Add(wideSpacing);
+            totalDistance += wideSpacing;
+        }
+
+        while (totalDistance + narrowSpacing <= radius)
+        {
+            spacingList.Add(narrowSpacing);
+            totalDistance += narrowSpacing;
+        }
+
+        ShuffleSpacingList(spacingList);
+        return spacingList;
+    }
+
+    private int GetRandomWideSpacingCount(float radius, float wideSpacing)
+    {
+        int minCount = Mathf.Max(0, Mathf.Min(minWideSpacingCount, maxWideSpacingCount));
+        int maxCount = Mathf.Max(0, Mathf.Max(minWideSpacingCount, maxWideSpacingCount));
+        int possibleMaxCount = Mathf.FloorToInt(radius / wideSpacing);
+        maxCount = Mathf.Min(maxCount, possibleMaxCount);
+        minCount = Mathf.Min(minCount, maxCount);
+
+        return Random.Range(minCount, maxCount + 1);
+    }
+
+    private void ShuffleSpacingList(List<float> spacingList)
+    {
+        for (int i = spacingList.Count - 1; i > 0; i--)
+        {
+            int randomIndex = Random.Range(0, i + 1);
+            float temp = spacingList[i];
+            spacingList[i] = spacingList[randomIndex];
+            spacingList[randomIndex] = temp;
+        }
+    }
+
+    private void CreateRayPrefab(Transform railsTransform, float distance)
+    {
+        Vector3 localPosition = Vector3.forward * distance;
+        GameObject ray = Instantiate(RayPrefab, railsTransform);
+        ray.transform.localPosition = localPosition;
+        ray.transform.localRotation = Quaternion.identity;
+        ray.transform.localScale = rayLocalScale;
     }
 }
