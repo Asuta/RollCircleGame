@@ -2596,20 +2596,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1335616827}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0ddc4a67c6ec784db1f813902b40944, type: 3}
+  m_Script: {fileID: 11500000, guid: 5dc831bb222512e4484fa7fe24e7de97, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CarCreator
-  CarPrefab: {fileID: 8873585373995833926, guid: 39173a86e0b2d054cb7967b54341f55d, type: 3}
-  GolinePrefab: {fileID: 6177979424204717111, guid: 01a6a8316e65fa7408ba3805a6fc0dfe, type: 3}
-  CarParent: {fileID: 101540875}
+  m_EditorClassIdentifier: Assembly-CSharp::RailsCreator
+  RayPrefab: {fileID: 6712305884714186530, guid: 04a8427dc679761468f5cf55b33a2c1b, type: 3}
+  RailsParent: {fileID: 1472143658}
   Plane: {fileID: 1472143658}
-  radiusOffset: 2
-  yOffset: 3
-  spawnCount: 3
-  spawnInterval: 1
-  carMoveDelay: 2
-  carMoveSpeed: 5
-  carMoveDistanceOffset: 0
+  rayCount: 10
+  raySpacing: 0.5
+  rayLocalScale: {x: 0.1, y: 10, z: 0.1}
 --- !u!1 &1399810837
 GameObject:
   m_ObjectHideFlags: 0
@@ -3232,6 +3227,7 @@ MonoBehaviour:
   GolinePrefab: {fileID: 6177979424204717111, guid: 01a6a8316e65fa7408ba3805a6fc0dfe, type: 3}
   CarParent: {fileID: 101540875}
   Plane: {fileID: 1472143658}
+  TargetPlayer: {fileID: 0}
   radiusOffset: 2
   yOffset: 3
   spawnCount: 3
