@@ -16,6 +16,7 @@ public class ButtonCreator : MonoBehaviour
 
     private int nextSpawnPointIndex;
     private Coroutine spawnCoroutine;
+    private Coroutine forceSpawnCoroutine;
 
     private void OnEnable()
     {
@@ -28,6 +29,12 @@ public class ButtonCreator : MonoBehaviour
         {
             StopCoroutine(spawnCoroutine);
             spawnCoroutine = null;
+        }
+
+        if (forceSpawnCoroutine != null)
+        {
+            StopCoroutine(forceSpawnCoroutine);
+            forceSpawnCoroutine = null;
         }
     }
 
@@ -64,9 +71,39 @@ public class ButtonCreator : MonoBehaviour
         }
     }
 
+    [InspectorButton]
+    private void ForceCreateButton()
+    {
+        if (buttonPrefab == null || spawnPoints == null || spawnPoints.Length == 0)
+            return;
+
+        if (forceSpawnCoroutine != null)
+            StopCoroutine(forceSpawnCoroutine);
+
+        forceSpawnCoroutine = StartCoroutine(ForceCreateButtonRoutine());
+    }
+
+    private IEnumerator ForceCreateButtonRoutine()
+    {
+        yield return FindSpawnPointAndCreateButton();
+        forceSpawnCoroutine = null;
+    }
+
     private bool HasButtonAtPosition(Vector3 position)
     {
         float checkRadius = Mathf.Abs(buttonPrefab.transform.lossyScale.y) * 2f;
+        Collider[] overlapColliders = Physics.OverlapSphere(
+            position,
+            checkRadius,
+            Physics.DefaultRaycastLayers,
+            QueryTriggerInteraction.Collide);
+
+        foreach (Collider overlapCollider in overlapColliders)
+        {
+            if (IsBlockedSpawnCollider(overlapCollider))
+                return true;
+        }
+
         Vector3 castOrigin = position + Vector3.up * (checkRadius + buttonCheckDistance);
         RaycastHit[] hits = Physics.SphereCastAll(
             castOrigin,
@@ -78,7 +115,7 @@ public class ButtonCreator : MonoBehaviour
 
         foreach (RaycastHit hit in hits)
         {
-            if (IsButton(hit.collider))
+            if (IsBlockedSpawnCollider(hit.collider))
                 return true;
         }
 
@@ -124,5 +161,27 @@ public class ButtonCreator : MonoBehaviour
             return false;
 
         return hitCollider.CompareTag("button") || hitCollider.GetComponentInParent<ButtonChild>()?.CompareTag("button") == true;
+    }
+
+    private bool IsBlockedSpawnCollider(Collider hitCollider)
+    {
+        return IsButton(hitCollider) || IsBaseRayCube(hitCollider);
+    }
+
+    private bool IsBaseRayCube(Collider hitCollider)
+    {
+        if (hitCollider == null)
+            return false;
+
+        Transform current = hitCollider.transform;
+        while (current != null)
+        {
+            if (current.name.Contains("BaseRayCube"))
+                return true;
+
+            current = current.parent;
+        }
+
+        return false;
     }
 }

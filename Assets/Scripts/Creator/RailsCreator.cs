@@ -11,6 +11,7 @@ public class RailsCreator : MonoBehaviour, IGroundTrapHandler
     [SerializeField] private int minWideSpacingCount = 2;
     [SerializeField] private int maxWideSpacingCount = 5;
     [SerializeField] private Vector3 rayLocalScale = new Vector3(0.1f, 2f, 0.1f);
+    [SerializeField] private float lifeTime = 6f;
 
     [InspectorButton]
     private void CreateRails()
@@ -34,6 +35,7 @@ public class RailsCreator : MonoBehaviour, IGroundTrapHandler
         rails.transform.position = spawnPosition;
         rails.transform.rotation = spawnRotation;
         CreateRayPrefabs(rails.transform);
+        Destroy(rails, lifeTime);
     }
 
     public void OnGroundTrapEvent()
