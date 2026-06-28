@@ -4,6 +4,7 @@ using UnityEngine;
 public class CarCreator : MonoBehaviour, IGroundTrapHandler
 {
     public GameObject CarPrefab;
+    public GameObject GolinePrefab;
     public Transform CarParent;
     public Transform Plane;
     public float radiusOffset;
@@ -55,6 +56,7 @@ public class CarCreator : MonoBehaviour, IGroundTrapHandler
             {
                 GameObject car = Instantiate(CarPrefab, spawnPosition, CarPrefab.transform.rotation, CarParent);
                 FacePlaneCenter(car.transform);
+                CreateGoline(car.transform);
                 yield break;
             }
 
@@ -92,6 +94,33 @@ public class CarCreator : MonoBehaviour, IGroundTrapHandler
             return;
 
         target.rotation = Quaternion.LookRotation(directionToCenter, Vector3.up);
+    }
+
+    private void CreateGoline(Transform carTransform)
+    {
+        if (GolinePrefab == null || Plane == null || carTransform == null)
+            return;
+
+        Vector3 goLinePosition = Plane.position;
+        goLinePosition.y = Plane.position.y + yOffset;
+        GameObject goLine = Instantiate(GolinePrefab, goLinePosition, carTransform.rotation, CarParent);
+        SetGolineLength(goLine.transform, Plane.lossyScale.x);
+    }
+
+    private void SetGolineLength(Transform goLineTransform, float targetLength)
+    {
+        if (goLineTransform == null)
+            return;
+
+        Vector3 localScale = goLineTransform.localScale;
+        float currentLossyScaleZ = goLineTransform.lossyScale.z;
+
+        if (Mathf.Abs(currentLossyScaleZ) <= Mathf.Epsilon)
+            localScale.z = targetLength;
+        else
+            localScale.z *= targetLength / currentLossyScaleZ;
+
+        goLineTransform.localScale = localScale;
     }
 
     private bool HasCarAtPosition(Vector3 position)
