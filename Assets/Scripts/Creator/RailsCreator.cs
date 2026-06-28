@@ -28,7 +28,7 @@ public class RailsCreator : MonoBehaviour, IGroundTrapHandler
         }
 
         Vector3 spawnPosition = Plane.position;
-        Quaternion spawnRotation = GetRandomRailsRotation();
+        Quaternion spawnRotation = GetRailsRotation();
         GameObject rails = new GameObject("RayRails");
         rails.transform.SetParent(RailsParent);
         rails.transform.position = spawnPosition;
@@ -41,12 +41,9 @@ public class RailsCreator : MonoBehaviour, IGroundTrapHandler
         CreateRails();
     }
 
-    private Quaternion GetRandomRailsRotation()
+    private Quaternion GetRailsRotation()
     {
-        float angle = Random.Range(0f, Mathf.PI * 2f);
-        Vector3 direction = new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
-
-        return Quaternion.LookRotation(direction, Vector3.up);
+        return Quaternion.LookRotation(Vector3.forward, Vector3.up);
     }
 
     private void CreateRayPrefabs(Transform railsTransform)
