@@ -24,7 +24,8 @@ public class CarCreator : MonoBehaviour, IGroundTrapHandler
         }
 
         Vector3 spawnPosition = GetSpawnPosition();
-        Instantiate(CarPrefab, spawnPosition, CarPrefab.transform.rotation, CarParent);
+        GameObject car = Instantiate(CarPrefab, spawnPosition, CarPrefab.transform.rotation, CarParent);
+        FacePlaneCenter(car.transform);
     }
 
     public void OnGroundTrapEvent()
@@ -43,5 +44,19 @@ public class CarCreator : MonoBehaviour, IGroundTrapHandler
         spawnPosition.y = Plane.position.y + yOffset;
 
         return spawnPosition;
+    }
+
+    private void FacePlaneCenter(Transform target)
+    {
+        if (target == null || Plane == null)
+            return;
+
+        Vector3 directionToCenter = Plane.position - target.position;
+        directionToCenter.y = 0f;
+
+        if (directionToCenter == Vector3.zero)
+            return;
+
+        target.rotation = Quaternion.LookRotation(directionToCenter, Vector3.up);
     }
 }
