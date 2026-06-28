@@ -349,10 +349,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 330585546}
+  - {fileID: 1270311253}
   - {fileID: 1814414275}
   - {fileID: 998015721}
   - {fileID: 1399810841}
-  - {fileID: 1270311253}
   - {fileID: 1163171944}
   - {fileID: 952844101}
   - {fileID: 95642377}
@@ -377,15 +377,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GroundTrapEvent
   handlers:
   - Target: {fileID: 1163171945}
-    Weight: 10
+    Weight: 1
   - Target: {fileID: 952844102}
-    Weight: 20
+    Weight: 1
   - Target: {fileID: 95642379}
-    Weight: 30
+    Weight: 1
   - Target: {fileID: 1422505388}
-    Weight: 20
+    Weight: 1
+  - Target: {fileID: 1088398267}
+    Weight: 1
+  - Target: {fileID: 1645546492}
+    Weight: 1
+  - Target: {fileID: 1335616829}
+    Weight: 1
+  - Target: {fileID: 507183601}
+    Weight: 1
   cooldownTargetNames:
   - RailsCreator
+  - SpikesCreator
   cooldownDuration: 3
 --- !u!4 &206862080 stripped
 Transform:
