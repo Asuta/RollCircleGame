@@ -760,6 +760,7 @@ GameObject:
   - component: {fileID: 356420098}
   - component: {fileID: 356420097}
   - component: {fileID: 356420096}
+  - component: {fileID: 356420100}
   m_Layer: 0
   m_Name: car
   m_TagString: Untagged
@@ -782,7 +783,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -861,6 +862,18 @@ Transform:
   - {fileID: 630350937}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &356420100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 356420095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 592f992f89b668741a4726374c7a389c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Car
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -3517,6 +3530,9 @@ MonoBehaviour:
   yOffset: 3
   spawnCount: 3
   spawnInterval: 1
+  carMoveDelay: 2
+  carMoveSpeed: 5
+  carMoveDistanceOffset: 0
 --- !u!1 &1667092475
 GameObject:
   m_ObjectHideFlags: 0
