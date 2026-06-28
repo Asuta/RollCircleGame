@@ -39,17 +39,27 @@ public class CarCreator : MonoBehaviour, IGroundTrapHandler
         for (int i = 0; i < spawnCount; i++)
         {
             yield return new WaitForSeconds(spawnInterval);
-            CreateSingleCar();
+            yield return CreateSingleCarWhenPositionAvailable();
         }
 
         spawnCoroutine = null;
     }
 
-    private void CreateSingleCar()
+    private IEnumerator CreateSingleCarWhenPositionAvailable()
     {
-        Vector3 spawnPosition = GetSpawnPosition();
-        GameObject car = Instantiate(CarPrefab, spawnPosition, CarPrefab.transform.rotation, CarParent);
-        FacePlaneCenter(car.transform);
+        while (true)
+        {
+            Vector3 spawnPosition = GetSpawnPosition();
+
+            if (!HasCarAtPosition(spawnPosition))
+            {
+                GameObject car = Instantiate(CarPrefab, spawnPosition, CarPrefab.transform.rotation, CarParent);
+                FacePlaneCenter(car.transform);
+                yield break;
+            }
+
+            yield return null;
+        }
     }
 
     public void OnGroundTrapEvent()
@@ -82,5 +92,35 @@ public class CarCreator : MonoBehaviour, IGroundTrapHandler
             return;
 
         target.rotation = Quaternion.LookRotation(directionToCenter, Vector3.up);
+    }
+
+    private bool HasCarAtPosition(Vector3 position)
+    {
+        float checkRadius = GetCarCheckRadius();
+        Collider[] colliders = Physics.OverlapSphere(position, checkRadius, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Collide);
+
+        foreach (Collider collider in colliders)
+        {
+            if (collider == null)
+                continue;
+
+            if (IsExistingCar(collider.transform))
+                return true;
+        }
+
+        return false;
+    }
+
+    private bool IsExistingCar(Transform hitTransform)
+    {
+        if (hitTransform == null)
+            return false;
+
+        return hitTransform.name.ToLower().Contains("car");
+    }
+
+    private float GetCarCheckRadius()
+    {
+        return Mathf.Abs(CarPrefab.transform.lossyScale.x);
     }
 }
