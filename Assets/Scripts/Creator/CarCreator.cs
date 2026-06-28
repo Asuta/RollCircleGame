@@ -128,12 +128,20 @@ public class CarCreator : MonoBehaviour, IGroundTrapHandler
 
     private GameObject CreateGoline(Transform carTransform)
     {
-        if (GolinePrefab == null || Plane == null || carTransform == null)
+        if (GolinePrefab == null || Plane == null || carTransform == null || TargetPlayer == null)
             return null;
 
-        Vector3 goLinePosition = Plane.position;
-        goLinePosition.y = Plane.position.y + yOffset;
-        GameObject goLine = Instantiate(GolinePrefab, goLinePosition, carTransform.rotation, CarParent);
+        Vector3 targetPosition = TargetPlayer.position;
+        targetPosition.y = carTransform.position.y;
+
+        Vector3 directionToPlayer = targetPosition - carTransform.position;
+        if (directionToPlayer == Vector3.zero)
+            return null;
+
+        Vector3 goLineDirection = directionToPlayer.normalized;
+        Vector3 goLinePosition = carTransform.position + goLineDirection * (Plane.lossyScale.x * 0.5f);
+        Quaternion goLineRotation = Quaternion.LookRotation(directionToPlayer, Vector3.up);
+        GameObject goLine = Instantiate(GolinePrefab, goLinePosition, goLineRotation, CarParent);
         SetGolineLength(goLine.transform, Plane.lossyScale.x);
         return goLine;
     }
