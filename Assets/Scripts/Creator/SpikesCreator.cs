@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class SpikesCreator : MonoBehaviour, IGroundTrapHandler
@@ -11,23 +12,35 @@ public class SpikesCreator : MonoBehaviour, IGroundTrapHandler
     [InspectorButton]
     private void CreateSpikes()
     {
+        StartCoroutine(CreateSpikesWhenPositionAvailable());
+    }
+
+    private IEnumerator CreateSpikesWhenPositionAvailable()
+    {
         if (SpikesPrefab == null)
         {
             Debug.LogWarning("SpikesPrefab is not assigned.", this);
-            return;
+            yield break;
         }
 
         if (Plane == null)
         {
             Debug.LogWarning("Plane is not assigned.", this);
-            return;
+            yield break;
         }
 
-        Vector3 spawnPosition = GetSpawnPosition();
-        Quaternion spawnRotation = CreatorTransform != null ? CreatorTransform.rotation : SpikesPrefab.transform.rotation;
-        Vector3 targetLossyScale = SpikesPrefab.transform.lossyScale;
-        GameObject spikes = Instantiate(SpikesPrefab, spawnPosition, spawnRotation, CreatorTransform);
-        SetLossyScale(spikes.transform, targetLossyScale);
+        while (true)
+        {
+            Vector3 spawnPosition = GetSpawnPosition();
+
+            if (!HasSpikesAtPosition(spawnPosition))
+            {
+                CreateAtPosition(spawnPosition);
+                yield break;
+            }
+
+            yield return null;
+        }
     }
 
     public void OnGroundTrapEvent()
@@ -45,6 +58,42 @@ public class SpikesCreator : MonoBehaviour, IGroundTrapHandler
         spawnPosition.y = GetPlaneSurfaceY(spawnPosition);
 
         return spawnPosition;
+    }
+
+    private void CreateAtPosition(Vector3 spawnPosition)
+    {
+        Quaternion spawnRotation = CreatorTransform != null ? CreatorTransform.rotation : SpikesPrefab.transform.rotation;
+        Vector3 targetLossyScale = SpikesPrefab.transform.lossyScale;
+        GameObject spikes = Instantiate(SpikesPrefab, spawnPosition, spawnRotation, CreatorTransform);
+        SetLossyScale(spikes.transform, targetLossyScale);
+    }
+
+    private bool HasSpikesAtPosition(Vector3 position)
+    {
+        float checkRadius = Mathf.Abs(SpikesPrefab.transform.lossyScale.x);
+        Collider[] colliders = Physics.OverlapSphere(position, checkRadius, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Collide);
+
+        foreach (Collider collider in colliders)
+        {
+            if (collider == null)
+                continue;
+
+            if (IsExistingSpikes(collider.transform))
+                return true;
+        }
+
+        return false;
+    }
+
+    private bool IsExistingSpikes(Transform hitTransform)
+    {
+        if (hitTransform == null)
+            return false;
+
+        if (hitTransform.GetComponentInParent<SpikesTrap>() != null)
+            return true;
+
+        return hitTransform.name.ToLower().Contains("spikes");
     }
 
     private float GetPlaneSurfaceY(Vector3 spawnPosition)
