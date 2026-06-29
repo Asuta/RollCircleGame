@@ -32,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.75, y: 1.40503, z: -10.7}
-  m_LocalScale: {x: 13.797, y: 1, z: 1}
+  m_LocalScale: {x: 28.17, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -127,8 +127,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f421d7b843b2d641bb4752da20e818a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SweepLaserLine
-  moveSpeed: 5
-  lifeTime: 20
+  moveSpeed: 15
+  lifeTime: 3
 --- !u!114 &7876331888127824909
 MonoBehaviour:
   m_ObjectHideFlags: 0

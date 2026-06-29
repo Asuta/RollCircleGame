@@ -377,21 +377,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GroundTrapEvent
   handlers:
   - Target: {fileID: 1163171945}
-    Weight: 1
+    Weight: 5
   - Target: {fileID: 952844102}
-    Weight: 1
+    Weight: 5
   - Target: {fileID: 95642379}
-    Weight: 1
+    Weight: 5
   - Target: {fileID: 1422505388}
-    Weight: 1
+    Weight: 65
   - Target: {fileID: 1088398267}
-    Weight: 1
+    Weight: 5
   - Target: {fileID: 1645546492}
-    Weight: 1
+    Weight: 5
   - Target: {fileID: 1335616829}
-    Weight: 1
+    Weight: 5
   - Target: {fileID: 507183601}
-    Weight: 1
+    Weight: 5
   cooldownTargetNames:
   - RailsCreator
   - SpikesCreator
@@ -429,7 +429,7 @@ Transform:
   m_GameObject: {fileID: 218399215}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.33, y: 0, z: -6.56}
+  m_LocalPosition: {x: -3.83, y: 0, z: -7.63}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1414,7 +1414,7 @@ Transform:
   m_GameObject: {fileID: 598163874}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.43, y: 0, z: -3.5}
+  m_LocalPosition: {x: -1.53, y: 0, z: -4.08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1736,7 +1736,7 @@ Transform:
   m_GameObject: {fileID: 971483744}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.6, y: 0, z: 8.14}
+  m_LocalPosition: {x: -6.88, y: 0, z: 9.67}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2044,7 +2044,7 @@ MonoBehaviour:
   FallJoyParent: {fileID: 101540875}
   TargetPlayer: {fileID: 0}
   ShadowPrefab: {fileID: 1871900556}
-  headOffset: 5
+  headOffset: 18
 --- !u!1 &1154228092
 GameObject:
   m_ObjectHideFlags: 0
@@ -2073,7 +2073,7 @@ Transform:
   m_GameObject: {fileID: 1154228092}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.86, y: 0, z: 6.21}
+  m_LocalPosition: {x: -3.69, y: 0, z: 7.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2208,7 +2208,7 @@ MonoBehaviour:
   - {fileID: 1614255123}
   - {fileID: 598163875}
   - {fileID: 218399216}
-  - {fileID: 1154228093}
+  - {fileID: 971483745}
   RayOnePrefab: {fileID: 6485755974286217565, guid: 7328cc479a78fd443adc24d5e764d001, type: 3}
   RayOneParent: {fileID: 1814414275}
   RayOneCenter: {fileID: 1472143658}
@@ -2455,8 +2455,8 @@ MonoBehaviour:
   minSpawnInterval: 1
   maxSpawnInterval: 2
   buttonCheckDistance: 1
-  spawnedButtonLocalY: 0.42
-  maxButtonCount: 3
+  spawnedButtonLocalY: 0.75
+  maxButtonCount: 5
 --- !u!65 &1270311250
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2569,7 +2569,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4035899544486543091, guid: 04a8427dc679761468f5cf55b33a2c1b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.9366865
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 4035899544486543091, guid: 04a8427dc679761468f5cf55b33a2c1b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3773,7 +3773,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RotatingPlatform
   initialRotateSpeed: 20
-  targetRotateSpeed: 60
+  targetRotateSpeed: 42
   speedChangeDuration: 60
 --- !u!1 &1815603896
 GameObject:
@@ -4027,7 +4027,7 @@ Transform:
   m_GameObject: {fileID: 1835983047}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.25, y: 0, z: 3.45}
+  m_LocalPosition: {x: -1.67, y: 0, z: 4.27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4686,7 +4686,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4035899544486543091, guid: 04a8427dc679761468f5cf55b33a2c1b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.9366865
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 4035899544486543091, guid: 04a8427dc679761468f5cf55b33a2c1b, type: 3}
       propertyPath: m_LocalPosition.z

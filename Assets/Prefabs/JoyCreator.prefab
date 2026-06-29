@@ -242,9 +242,10 @@ MonoBehaviour:
   TargetPlayer: {fileID: 0}
   JoyPrefab: {fileID: 4691077263533297678}
   ShadowTransform: {fileID: 0}
-  followDuration: 2
+  followDuration: 3
+  followLerpSpeed: 2.5
   headOffset: 5
-  fallSpeed: 5
+  fallSpeed: 30
 --- !u!1 &4691077263533297678
 GameObject:
   m_ObjectHideFlags: 0

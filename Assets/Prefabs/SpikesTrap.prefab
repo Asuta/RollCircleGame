@@ -129,10 +129,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpikesTrap
   SpikesOut: {fileID: 6057010781251102346}
   SpikesIn: {fileID: 2439044359429607903}
-  showDuration: 1
+  showDuration: 1.5
   downLocalY: -2.55
   moveLerpSpeed: 8
-  lifeTime: 6
+  lifeTime: 8
 --- !u!1 &6054820145285550323
 GameObject:
   m_ObjectHideFlags: 0

@@ -239,9 +239,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3bdd9e689fba394ea5389881aaea10d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RayTwo
-  rotateSpeedOne: 45
-  rotateSpeedTwo: 90
-  rotateSpeedThree: 135
+  rotateSpeedOne: 20
+  rotateSpeedTwo: 45
+  rotateSpeedThree: 70
 --- !u!1001 &2943940354986638765
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -252,15 +252,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4035899544486543091, guid: 04a8427dc679761468f5cf55b33a2c1b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 15.244662
-      objectReference: {fileID: 0}
-    - target: {fileID: 4035899544486543091, guid: 04a8427dc679761468f5cf55b33a2c1b, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.10890012
-      objectReference: {fileID: 0}
-    - target: {fileID: 4035899544486543091, guid: 04a8427dc679761468f5cf55b33a2c1b, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.43717432
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 4035899544486543091, guid: 04a8427dc679761468f5cf55b33a2c1b, type: 3}
       propertyPath: m_LocalPosition.x
