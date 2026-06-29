@@ -2044,7 +2044,7 @@ MonoBehaviour:
   FallJoyParent: {fileID: 101540875}
   TargetPlayer: {fileID: 0}
   ShadowPrefab: {fileID: 1871900556}
-  headOffset: 18
+  headOffset: 40
 --- !u!1 &1154228092
 GameObject:
   m_ObjectHideFlags: 0
@@ -2666,8 +2666,8 @@ MonoBehaviour:
   Plane: {fileID: 1472143658}
   spacingA: 0.5
   spacingB: 2.5
-  minWideSpacingCount: 1
-  maxWideSpacingCount: 2
+  minWideSpacingCount: 2
+  maxWideSpacingCount: 3
   rayLocalScale: {x: 0.1, y: 10, z: 0.1}
   lifeTime: 6
 --- !u!1 &1399810837
