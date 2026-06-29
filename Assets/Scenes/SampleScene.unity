@@ -377,21 +377,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GroundTrapEvent
   handlers:
   - Target: {fileID: 1163171945}
-    Weight: 5
+    Weight: 1
   - Target: {fileID: 952844102}
-    Weight: 5
+    Weight: 1
   - Target: {fileID: 95642379}
-    Weight: 5
+    Weight: 1
   - Target: {fileID: 1422505388}
-    Weight: 65
+    Weight: 13
   - Target: {fileID: 1088398267}
-    Weight: 5
+    Weight: 1
   - Target: {fileID: 1645546492}
-    Weight: 5
+    Weight: 1
   - Target: {fileID: 1335616829}
-    Weight: 5
+    Weight: 1
   - Target: {fileID: 507183601}
-    Weight: 5
+    Weight: 1
   cooldownTargetNames:
   - RailsCreator
   - SpikesCreator
@@ -2456,7 +2456,7 @@ MonoBehaviour:
   maxSpawnInterval: 2
   buttonCheckDistance: 1
   spawnedButtonLocalY: 0.75
-  maxButtonCount: 5
+  maxButtonCount: 13
 --- !u!65 &1270311250
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2664,10 +2664,10 @@ MonoBehaviour:
   RayPrefab: {fileID: 6712305884714186530, guid: 04a8427dc679761468f5cf55b33a2c1b, type: 3}
   RailsParent: {fileID: 1472143658}
   Plane: {fileID: 1472143658}
-  spacingA: 1
-  spacingB: 2
-  minWideSpacingCount: 2
-  maxWideSpacingCount: 3
+  spacingA: 0.5
+  spacingB: 2.5
+  minWideSpacingCount: 1
+  maxWideSpacingCount: 2
   rayLocalScale: {x: 0.1, y: 10, z: 0.1}
   lifeTime: 6
 --- !u!1 &1399810837
@@ -3295,12 +3295,12 @@ MonoBehaviour:
   Plane: {fileID: 1472143658}
   TargetPlayer: {fileID: 0}
   radiusOffset: 2
-  yOffset: 3
+  yOffset: 2
   spawnCount: 3
   spawnInterval: 1
   carMoveDelay: 2
-  carMoveSpeed: 5
-  carMoveDistanceOffset: 0
+  carMoveSpeed: 10
+  carMoveDistanceOffset: 1
 --- !u!1 &1667092475
 GameObject:
   m_ObjectHideFlags: 0
@@ -3773,7 +3773,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RotatingPlatform
   initialRotateSpeed: 20
-  targetRotateSpeed: 42
+  targetRotateSpeed: 40
   speedChangeDuration: 60
 --- !u!1 &1815603896
 GameObject:

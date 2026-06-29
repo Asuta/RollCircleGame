@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 844c6bb34ce6efc40989c83bc55a6a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RayThree
-  intList: 140000002300000032000000
+  intList: 1e0000003c0000005a000000
 --- !u!1001 &1891068431143048436
 PrefabInstance:
   m_ObjectHideFlags: 0
