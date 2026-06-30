@@ -1,0 +1,51 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
+[RequireComponent(typeof(Button))]
+public class PauseMenuButton : MonoBehaviour
+{
+    public enum ButtonAction
+    {
+        Resume,
+        Restart,
+        Quit
+    }
+
+    [SerializeField] private PauseManager pauseManager;
+    [SerializeField] private ButtonAction action;
+
+    private Button button;
+
+    private void OnEnable()
+    {
+        button = GetComponent<Button>();
+        button.onClick.RemoveListener(HandleClick);
+        button.onClick.AddListener(HandleClick);
+    }
+
+    private void OnDisable()
+    {
+        if (button != null)
+            button.onClick.RemoveListener(HandleClick);
+    }
+
+    private void HandleClick()
+    {
+        switch (action)
+        {
+            case ButtonAction.Resume:
+                if (pauseManager != null)
+                    pauseManager.Resume();
+                break;
+            case ButtonAction.Restart:
+                Time.timeScale = 1f;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                break;
+            case ButtonAction.Quit:
+                Time.timeScale = 1f;
+                Application.Quit();
+                break;
+        }
+    }
+}
