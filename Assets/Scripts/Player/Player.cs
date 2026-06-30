@@ -2,6 +2,22 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private int maxHealth = 8;
+    [SerializeField] private float invincibleDuration = 0.5f;
+
+    [SerializeField] private int currentHealth;
+
+    private float invincibleEndTime;
+    private bool isDead;
+
+    public int CurrentHealth => currentHealth;
+    public int MaxHealth => maxHealth;
+
+    private void Awake()
+    {
+        currentHealth = maxHealth;
+    }
+
     private void OnEnable()
     {
         GlobalEvents.RayHitPlayer += OnRayHitPlayer;
@@ -17,6 +33,31 @@ public class Player : MonoBehaviour
         if (playerTransform != transform)
             return;
 
-        Debug.Log("我被击中了");
+        if (isDead)
+            return;
+
+        if (Time.time < invincibleEndTime)
+            return;
+
+        invincibleEndTime = Time.time + invincibleDuration;
+        TakeDamage(1);
+    }
+
+    private void TakeDamage(int damage)
+    {
+        currentHealth = Mathf.Max(0, currentHealth - damage);
+        Debug.Log($"我被击中了，剩余血量：{currentHealth}");
+
+        if (currentHealth <= 0)
+            Die();
+    }
+
+    private void Die()
+    {
+        if (isDead)
+            return;
+
+        isDead = true;
+        Debug.Log("玩家死亡");
     }
 }
