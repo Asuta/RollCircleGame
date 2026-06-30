@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
@@ -39,8 +38,8 @@ public class PauseMenuButton : MonoBehaviour
                     pauseManager.Resume();
                 break;
             case ButtonAction.Restart:
-                Time.timeScale = 1f;
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                if (pauseManager != null)
+                    pauseManager.Restart();
                 break;
             case ButtonAction.Quit:
                 Time.timeScale = 1f;

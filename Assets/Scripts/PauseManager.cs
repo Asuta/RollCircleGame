@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseManager : MonoBehaviour
 {
@@ -30,6 +31,14 @@ public class PauseManager : MonoBehaviour
     public void Resume()
     {
         SetPaused(false);
+    }
+
+    public void Restart()
+    {
+        Time.timeScale = 1f;
+
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name, LoadSceneMode.Single);
     }
 
     private void SetPaused(bool paused)
