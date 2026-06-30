@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,12 +7,13 @@ public class RailsCreator : MonoBehaviour, IGroundTrapHandler
     public GameObject RayPrefab;
     public Transform RailsParent;
     public Transform Plane;
+    public float jiaoduTest;
+    [SerializeField] private float angleTolerance = 3f;
     [SerializeField] private float spacingA = 0.4f;
     [SerializeField] private float spacingB = 0.8f;
     [SerializeField] private int minWideSpacingCount = 2;
     [SerializeField] private int maxWideSpacingCount = 5;
     [SerializeField] private Vector3 rayLocalScale = new Vector3(0.1f, 2f, 0.1f);
-    [SerializeField] private float lifeTime = 6f;
 
     [InspectorButton]
     private void CreateRails()
@@ -34,8 +36,8 @@ public class RailsCreator : MonoBehaviour, IGroundTrapHandler
         rails.transform.SetParent(RailsParent);
         rails.transform.position = spawnPosition;
         rails.transform.rotation = spawnRotation;
-        CreateRayPrefabs(rails.transform);
-        Destroy(rails, lifeTime);
+        RailsBatch batch = CreateRayPrefabs(rails.transform);
+        StartCoroutine(DestroyWhenAngleReached(rails, batch.FirstRay, batch.LastRay));
     }
 
     public void OnGroundTrapEvent()
@@ -48,22 +50,26 @@ public class RailsCreator : MonoBehaviour, IGroundTrapHandler
         return Quaternion.LookRotation(Vector3.forward, Vector3.up);
     }
 
-    private void CreateRayPrefabs(Transform railsTransform)
+    private RailsBatch CreateRayPrefabs(Transform railsTransform)
     {
         if (railsTransform == null)
-            return;
+            return new RailsBatch();
 
         float radius = Plane.lossyScale.x * 0.5f;
         float currentDistance = 0f;
         List<float> spacingList = CreateSpacingList(radius);
+        RailsBatch batch = new RailsBatch();
 
-        CreateRayPrefab(railsTransform, currentDistance);
+        batch.FirstRay = CreateRayPrefab(railsTransform, currentDistance);
+        batch.LastRay = batch.FirstRay;
 
         foreach (float spacing in spacingList)
         {
             currentDistance += spacing;
-            CreateRayPrefab(railsTransform, currentDistance);
+            batch.LastRay = CreateRayPrefab(railsTransform, currentDistance);
         }
+
+        return batch;
     }
 
     private List<float> CreateSpacingList(float radius)
@@ -112,12 +118,46 @@ public class RailsCreator : MonoBehaviour, IGroundTrapHandler
         }
     }
 
-    private void CreateRayPrefab(Transform railsTransform, float distance)
+    private Transform CreateRayPrefab(Transform railsTransform, float distance)
     {
         Vector3 localPosition = Vector3.forward * distance;
         GameObject ray = Instantiate(RayPrefab, railsTransform);
         ray.transform.localPosition = localPosition;
         ray.transform.localRotation = Quaternion.identity;
         ray.transform.localScale = rayLocalScale;
+        return ray.transform;
+    }
+
+    private IEnumerator DestroyWhenAngleReached(GameObject rails, Transform firstRay, Transform lastRay)
+    {
+        while (rails != null && firstRay != null && lastRay != null)
+        {
+            float currentAngle = GetProjectedLineAngle(firstRay.position, lastRay.position);
+            if (Mathf.Abs(Mathf.DeltaAngle(currentAngle, jiaoduTest)) <= angleTolerance)
+            {
+                Destroy(rails);
+                yield break;
+            }
+
+            yield return null;
+        }
+    }
+
+    private float GetProjectedLineAngle(Vector3 startPosition, Vector3 endPosition)
+    {
+        Vector3 direction = endPosition - startPosition;
+        direction.y = 0f;
+
+        if (direction == Vector3.zero)
+            return 0f;
+
+        float angle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+        return angle < 0f ? angle + 360f : angle;
+    }
+
+    private class RailsBatch
+    {
+        public Transform FirstRay;
+        public Transform LastRay;
     }
 }
