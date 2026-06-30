@@ -160,7 +160,16 @@ public class ButtonCreator : MonoBehaviour
         if (hitCollider == null)
             return false;
 
-        return hitCollider.CompareTag("button") || hitCollider.GetComponentInParent<ButtonChild>()?.CompareTag("button") == true;
+        Transform current = hitCollider.transform;
+        while (current != null)
+        {
+            if (current.CompareTag("button"))
+                return true;
+
+            current = current.parent;
+        }
+
+        return hitCollider.GetComponentInParent<ButtonChild>() != null;
     }
 
     private bool IsBlockedSpawnCollider(Collider hitCollider)
