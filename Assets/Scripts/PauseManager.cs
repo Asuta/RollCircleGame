@@ -4,9 +4,11 @@ using UnityEngine.SceneManagement;
 public class PauseManager : MonoBehaviour
 {
     [SerializeField] private GameObject pausePanel;
+    [SerializeField] private GameObject tutorialPanel;
 
     private bool isPaused;
     private bool canPause = true;
+    private bool isTutorialOpen;
 
     private void Start()
     {
@@ -14,6 +16,9 @@ public class PauseManager : MonoBehaviour
 
         if (pausePanel != null)
             pausePanel.SetActive(false);
+
+        if (tutorialPanel != null)
+            tutorialPanel.SetActive(false);
     }
 
     private void Update()
@@ -21,8 +26,16 @@ public class PauseManager : MonoBehaviour
         if (!canPause)
             return;
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-            TogglePause();
+        if (!Input.GetKeyDown(KeyCode.Escape))
+            return;
+
+        if (isTutorialOpen)
+        {
+            CloseTutorial();
+            return;
+        }
+
+        TogglePause();
     }
 
     public void TogglePause()
@@ -40,7 +53,31 @@ public class PauseManager : MonoBehaviour
 
     public void Resume()
     {
+        CloseTutorial();
         SetPaused(false);
+    }
+
+    public void OpenTutorial()
+    {
+        if (tutorialPanel == null)
+            return;
+
+        isPaused = true;
+
+        if (pausePanel != null)
+            pausePanel.SetActive(true);
+
+        isTutorialOpen = true;
+        tutorialPanel.SetActive(true);
+        Time.timeScale = 0f;
+    }
+
+    public void CloseTutorial()
+    {
+        isTutorialOpen = false;
+
+        if (tutorialPanel != null)
+            tutorialPanel.SetActive(false);
     }
 
     public void Restart()
@@ -62,6 +99,8 @@ public class PauseManager : MonoBehaviour
 
         if (pausePanel != null)
             pausePanel.SetActive(false);
+
+        CloseTutorial();
     }
 
     private void SetPaused(bool paused)
@@ -70,6 +109,9 @@ public class PauseManager : MonoBehaviour
 
         if (pausePanel != null)
             pausePanel.SetActive(paused);
+
+        if (!paused)
+            CloseTutorial();
 
         Time.timeScale = paused ? 0f : 1f;
     }

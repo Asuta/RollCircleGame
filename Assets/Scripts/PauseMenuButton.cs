@@ -8,6 +8,7 @@ public class PauseMenuButton : MonoBehaviour
     {
         Resume,
         Restart,
+        Tutorial,
         Quit
     }
 
@@ -40,6 +41,10 @@ public class PauseMenuButton : MonoBehaviour
             case ButtonAction.Restart:
                 if (pauseManager != null)
                     pauseManager.Restart();
+                break;
+            case ButtonAction.Tutorial:
+                if (pauseManager != null)
+                    pauseManager.OpenTutorial();
                 break;
             case ButtonAction.Quit:
                 Time.timeScale = 1f;
