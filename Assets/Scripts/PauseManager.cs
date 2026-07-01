@@ -6,14 +6,21 @@ public class PauseManager : MonoBehaviour
     [SerializeField] private GameObject pausePanel;
 
     private bool isPaused;
+    private bool canPause = true;
 
     private void Start()
     {
-        SetPaused(false);
+        isPaused = false;
+
+        if (pausePanel != null)
+            pausePanel.SetActive(false);
     }
 
     private void Update()
     {
+        if (!canPause)
+            return;
+
         if (Input.GetKeyDown(KeyCode.Escape))
             TogglePause();
     }
@@ -25,6 +32,9 @@ public class PauseManager : MonoBehaviour
 
     public void Pause()
     {
+        if (!canPause)
+            return;
+
         SetPaused(true);
     }
 
@@ -39,6 +49,19 @@ public class PauseManager : MonoBehaviour
 
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name, LoadSceneMode.Single);
+    }
+
+    public void SetPauseInputEnabled(bool enabled)
+    {
+        canPause = enabled;
+
+        if (enabled)
+            return;
+
+        isPaused = false;
+
+        if (pausePanel != null)
+            pausePanel.SetActive(false);
     }
 
     private void SetPaused(bool paused)
