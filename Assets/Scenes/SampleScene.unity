@@ -2433,6 +2433,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1142710847}
   - component: {fileID: 1142710846}
+  - component: {fileID: 1142710848}
   m_Layer: 0
   m_Name: PauseManager
   m_TagString: Untagged
@@ -2460,6 +2461,30 @@ MonoBehaviour:
   - {fileID: 6100000004}
   - {fileID: 1932840599}
   selectedButtonColor: {r: 1, g: 0.8, b: 0.25, a: 1}
+--- !u!114 &1142710848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1142710845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1f796a02ecb4e24bbdc6fb5ee0df86a, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealthHud
+  targetCanvas: {fileID: 6000000003}
+  leftPlayer: {fileID: 998015724}
+  rightPlayer: {fileID: 0}
+  displayedHealthCount: 8
+  screenPadding: {x: 22, y: 18}
+  logoSize: {x: 38, y: 38}
+  healthIconSize: {x: 24, y: 24}
+  iconSpacing: 8
+  logoGap: 14
+  fullHealthColor: {r: 1, g: 0.1, b: 0.1, a: 1}
+  emptyHealthColor: {r: 0.45, g: 0.45, b: 0.45, a: 1}
+  logoColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &1142710847
 Transform:
   m_ObjectHideFlags: 0

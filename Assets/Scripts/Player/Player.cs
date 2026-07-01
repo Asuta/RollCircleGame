@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -12,10 +13,12 @@ public class Player : MonoBehaviour
 
     public int CurrentHealth => currentHealth;
     public int MaxHealth => maxHealth;
+    public event Action<Player> HealthChanged;
 
     private void Awake()
     {
         currentHealth = maxHealth;
+        HealthChanged?.Invoke(this);
     }
 
     private void OnEnable()
@@ -46,6 +49,7 @@ public class Player : MonoBehaviour
     private void TakeDamage(int damage)
     {
         currentHealth = Mathf.Max(0, currentHealth - damage);
+        HealthChanged?.Invoke(this);
         Debug.Log($"我被击中了，剩余血量：{currentHealth}");
 
         if (currentHealth <= 0)
