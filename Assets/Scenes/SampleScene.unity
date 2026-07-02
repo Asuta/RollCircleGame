@@ -2502,9 +2502,17 @@ MonoBehaviour:
   leftPlayer: {fileID: 998015724}
   rightPlayer: {fileID: 0}
   placeholderSize: {x: 220, y: 220}
+  buttonShowDelay: 5
+  buttonSize: {x: 64, y: 64}
+  buttonSpacing: 48
+  buttonBottomOffset: 44
   leftWinnerColor: {r: 1, g: 0, b: 0, a: 1}
   rightLoserColor: {r: 0, g: 1, b: 0, a: 1}
+  buttonNormalColor: {r: 1, g: 1, b: 1, a: 1}
+  buttonHoverColor: {r: 1, g: 0.85, b: 0.25, a: 1}
+  buttonSelectedColor: {r: 1, g: 0.55, b: 0.15, a: 1}
   pauseGameOnShow: 1
+  mainMenuSceneName:
 --- !u!4 &1142710847
 Transform:
   m_ObjectHideFlags: 0
