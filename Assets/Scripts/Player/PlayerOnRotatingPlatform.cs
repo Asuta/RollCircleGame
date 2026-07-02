@@ -20,6 +20,7 @@ public class PlayerOnRotatingPlatform : MonoBehaviour
     public float dashCooldown = 0.5f;
 
     public Transform visualRoot; // 角色模型，可选，用来控制朝向
+    public bool reverseArrowHorizontalInput;
 
     private CharacterController controller;
 
@@ -185,9 +186,9 @@ public class PlayerOnRotatingPlatform : MonoBehaviour
         else
         {
             if (Input.GetKey(KeyCode.LeftArrow))
-                x += 1f;
+                x += reverseArrowHorizontalInput ? -1f : 1f;
             if (Input.GetKey(KeyCode.RightArrow))
-                x -= 1f;
+                x += reverseArrowHorizontalInput ? 1f : -1f;
             if (Input.GetKey(KeyCode.UpArrow))
                 z += 1f;
             if (Input.GetKey(KeyCode.DownArrow))
