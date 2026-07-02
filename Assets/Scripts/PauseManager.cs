@@ -14,6 +14,7 @@ public class PauseManager : MonoBehaviour
     private bool canPause = true;
     private bool isTutorialOpen;
     private int selectedButtonIndex;
+    private int suppressPauseMenuInputFrame = -1;
     private Graphic[] buttonGraphics;
     private Color[] normalButtonColors;
 
@@ -32,25 +33,31 @@ public class PauseManager : MonoBehaviour
 
     private void Update()
     {
+        if (IsTutorialPanelOpen())
+        {
+            isTutorialOpen = true;
+
+            if (IsTutorialCloseInputDown())
+                CloseTutorial();
+
+            return;
+        }
+
         if (!canPause)
             return;
 
         if (!Input.GetKeyDown(KeyCode.Escape))
             return;
 
-        if (isTutorialOpen)
-        {
-            CloseTutorial();
-            return;
-        }
-
         TogglePause();
-        return;
     }
 
     private void LateUpdate()
     {
-        if (!canPause || isTutorialOpen || !IsPauseMenuOpen())
+        if (suppressPauseMenuInputFrame == Time.frameCount)
+            return;
+
+        if (!canPause || IsTutorialPanelOpen() || !IsPauseMenuOpen())
             return;
 
         HandlePauseMenuInput();
@@ -94,12 +101,13 @@ public class PauseManager : MonoBehaviour
 
     public void CloseTutorial()
     {
+        suppressPauseMenuInputFrame = Time.frameCount;
         isTutorialOpen = false;
 
         if (tutorialPanel != null)
             tutorialPanel.SetActive(false);
 
-        if (isPaused)
+        if (isPaused || IsPauseMenuOpen())
             SelectCurrentButton();
     }
 
@@ -285,6 +293,18 @@ public class PauseManager : MonoBehaviour
     private bool IsPauseMenuOpen()
     {
         return pausePanel != null && pausePanel.activeInHierarchy;
+    }
+
+    private bool IsTutorialPanelOpen()
+    {
+        return tutorialPanel != null && tutorialPanel.activeInHierarchy;
+    }
+
+    private bool IsTutorialCloseInputDown()
+    {
+        return Input.GetKeyDown(KeyCode.Escape)
+            || Input.GetKeyDown(KeyCode.F)
+            || Input.GetKeyDown(KeyCode.Space);
     }
 
     private void CacheButtonColors()
