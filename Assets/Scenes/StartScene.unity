@@ -257,6 +257,7 @@ GameObject:
   - component: {fileID: 221020580}
   - component: {fileID: 221020579}
   - component: {fileID: 221020578}
+  - component: {fileID: 221020581}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -331,13 +332,57 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 221020577}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.18001376, y: -0, z: -0, w: 0.9836641}
+  m_LocalPosition: {x: 0, y: 7.55, z: -9.96}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 20.741, y: 0, z: 0}
+--- !u!114 &221020581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 221020577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
 --- !u!1001 &275746811
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -352,15 +397,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6565768222226256551, guid: 1e70baf5b5199e448a0929fcfc730f92, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 831.97723
+      value: -0.01
       objectReference: {fileID: 0}
     - target: {fileID: 6565768222226256551, guid: 1e70baf5b5199e448a0929fcfc730f92, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.7652335
+      value: 2.54
       objectReference: {fileID: 0}
     - target: {fileID: 6565768222226256551, guid: 1e70baf5b5199e448a0929fcfc730f92, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1457.0248
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6565768222226256551, guid: 1e70baf5b5199e448a0929fcfc730f92, type: 3}
       propertyPath: m_LocalRotation.w
@@ -501,7 +546,7 @@ Transform:
   m_GameObject: {fileID: 709490127}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 838.0503, y: 0, z: 1458.4177}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 21.110743, y: 1.5304654, z: 21.110743}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -529,15 +574,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6565768222226256551, guid: 1e70baf5b5199e448a0929fcfc730f92, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 840.91
+      value: 2.69
       objectReference: {fileID: 0}
     - target: {fileID: 6565768222226256551, guid: 1e70baf5b5199e448a0929fcfc730f92, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.7652335
+      value: 2.54
       objectReference: {fileID: 0}
     - target: {fileID: 6565768222226256551, guid: 1e70baf5b5199e448a0929fcfc730f92, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1453.39
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6565768222226256551, guid: 1e70baf5b5199e448a0929fcfc730f92, type: 3}
       propertyPath: m_LocalRotation.w
@@ -572,6 +617,60 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e70baf5b5199e448a0929fcfc730f92, type: 3}
+--- !u!1 &880000001
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 880000002}
+  - component: {fileID: 880000003}
+  m_Layer: 0
+  m_Name: Start Scene Speech Bubble Setup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &880000002
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880000001}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &880000003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c6d29f19de74f24eb6d52e72d25d731, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StartSceneSpeechBubbleSetup
+  targetCamera: {fileID: 221020579}
+  bubbleOffset: {x: 0, y: 2.4, z: 0}
+  bubbleSize: {x: 260, y: 120}
+  tailSize: {x: 34, y: 34}
+  worldScale: 0.01
+  leftText: Hello!
+  rightText: Ready?
+  bubbleColor: {r: 1, g: 1, b: 1, a: 1}
+  textColor: {r: 0, g: 0, b: 0, a: 1}
+  outlineColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -581,3 +680,4 @@ SceneRoots:
   - {fileID: 709490131}
   - {fileID: 275746811}
   - {fileID: 758803017}
+  - {fileID: 880000002}
