@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameEndScreenUI : MonoBehaviour
@@ -328,21 +327,11 @@ public class GameEndScreenUI : MonoBehaviour
 
     private void RestartGame()
     {
-        Time.timeScale = 1f;
-        Scene currentScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(currentScene.name, LoadSceneMode.Single);
+        GameSceneLoader.RestartCurrentScene();
     }
 
     private void BackToMainMenu()
     {
-        Time.timeScale = 1f;
-
-        if (!string.IsNullOrEmpty(mainMenuSceneName))
-        {
-            SceneManager.LoadScene(mainMenuSceneName, LoadSceneMode.Single);
-            return;
-        }
-
-        SceneManager.LoadScene(0, LoadSceneMode.Single);
+        GameSceneLoader.LoadMainMenu(mainMenuSceneName);
     }
 }

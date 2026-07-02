@@ -53,9 +53,14 @@ public class SplitScreenSetup : MonoBehaviour
         if (!createPlayer2CameraFromCopy || player2CameraSourceObject == null)
             return;
 
-        GameObject copiedObject = Instantiate(player2CameraSourceObject, player2CameraSourceObject.transform.parent);
+        Vector3 player2SpawnPosition = player2CameraSourceObject.transform.position + Player2CopyOffset;
+        Quaternion player2SpawnRotation = player2CameraSourceObject.transform.rotation;
+        GameObject copiedObject = Instantiate(
+            player2CameraSourceObject,
+            player2SpawnPosition,
+            player2SpawnRotation,
+            player2CameraSourceObject.transform.parent);
         copiedObject.name = player2CameraSourceObject.name + " Player2 Copy";
-        copiedObject.transform.position += Player2CopyOffset;
         player2GroundTrapEvent = copiedObject.GetComponentInChildren<GroundTrapEvent>(true);
 
         Camera copiedCamera = copiedObject.GetComponentInChildren<Camera>(true);

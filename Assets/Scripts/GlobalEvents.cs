@@ -21,4 +21,11 @@ public static class GlobalEvents
     {
         ButtonDisappearing?.Invoke(playerTransform);
     }
+
+    public static void ClearAllListeners()
+    {
+        RayHitPlayer = null;
+        ButtonPressed = null;
+        ButtonDisappearing = null;
+    }
 }

@@ -11,6 +11,11 @@ public class Car : MonoBehaviour
 
     private int playerLayer;
 
+    public static void ClearHitPlayerListeners()
+    {
+        HitPlayer = null;
+    }
+
     private void Awake()
     {
         playerLayer = LayerMask.NameToLayer("Player");

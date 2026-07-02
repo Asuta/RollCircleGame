@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PauseManager : MonoBehaviour
@@ -113,10 +112,7 @@ public class PauseManager : MonoBehaviour
 
     public void Restart()
     {
-        Time.timeScale = 1f;
-
-        Scene currentScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(currentScene.name, LoadSceneMode.Single);
+        GameSceneLoader.RestartCurrentScene();
     }
 
     public void SetPauseInputEnabled(bool enabled)
