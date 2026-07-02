@@ -2434,6 +2434,7 @@ GameObject:
   - component: {fileID: 1142710847}
   - component: {fileID: 1142710846}
   - component: {fileID: 1142710848}
+  - component: {fileID: 1142710849}
   m_Layer: 0
   m_Name: PauseManager
   m_TagString: Untagged
@@ -2485,6 +2486,25 @@ MonoBehaviour:
   fullHealthColor: {r: 1, g: 0.1, b: 0.1, a: 1}
   emptyHealthColor: {r: 0.45, g: 0.45, b: 0.45, a: 1}
   logoColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &1142710849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1142710845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddc2de41c6f44704889c7160b8c8894a, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::GameEndScreenUI
+  targetCanvas: {fileID: 6000000003}
+  leftPlayer: {fileID: 998015724}
+  rightPlayer: {fileID: 0}
+  placeholderSize: {x: 220, y: 220}
+  leftWinnerColor: {r: 1, g: 0, b: 0, a: 1}
+  rightLoserColor: {r: 0, g: 1, b: 0, a: 1}
+  pauseGameOnShow: 1
 --- !u!4 &1142710847
 Transform:
   m_ObjectHideFlags: 0
